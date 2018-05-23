@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title-用户测试平台</title>
+    <!--bootstrap 样式-->
+
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <!--ueditor 编辑器样式-->
+    <link href="~/Content/ueditor/themes/iframe.css" rel="stylesheet" />
+    <link href="~/Content/ueditor/themes/default/css/ueditor.css" rel="stylesheet" />
+    <!--PagedList 分页插件-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <!--awesome 字体文件-->
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--loadingbar 加载读条-->
+    <link href="/Content/angular-loading-bar/loading-bar.min.css" rel="stylesheet" />
+   
+
+
+    <!--时间 jedate 样式-->
+    <link href="~/Scripts/jedate/skin/jedate.css" rel="stylesheet" />
+
+    <!--jquery 插件-->
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <!--angular js 插件-->
+    <script src="~/Scripts/js/angular.js"></script>
+    <script src="~/Scripts/js/angular-animate.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="~/Content/css/jquery.pagination.js"></script>
+
+    <script src="/Content/angular-loading-bar/loading-bar.js"></script>
+
+    <!--时间 jedate 插件-->
+    <script src="~/Scripts/jedate/jquery.jedate.js"></script>
+
+
+
+    <!--ueditor 编辑器插件-->
+    <script src="~/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/ueditor.all.min.js"></script>
+    <!--ckeditor 编辑器插件-->
+    <script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+
+    <!--layer  toastr 插件-->
+    @Scripts.Render("~/bundles/layerToastr")
+    <!--layer  toastr 样式-->
+    @Styles.Render("~/Content/csslayerToastr")
+
+    <!--bootstrap 插件-->
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</head>
+<body class="body-content">
+    <section id="container">
+        @RenderBody()
+    </section>
+    <!--widget 布局-->
+    @Styles.Render("~/Content/widget")
+
+    @Scripts.Render("~/bundles/widget")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

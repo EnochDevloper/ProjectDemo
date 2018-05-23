@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewBag.Title = "树形视图";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var data = ViewData["data"];
+}
+<link href="~/Content/snow.css" rel="stylesheet" />
+<style type="text/css">
+    .node_name {
+        font-size: 13px;
+        font-family: "宋体";
+        color: black;
+    }
+</style>
+
+
+@*<canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;" width="1285" height="100%"></canvas>*@
+
+@*<div class="LoginWindow">*@
+@*<h2 style="color:white">树形视图</h2>*@
+<div class="login left">
+    <div class="search">
+        <input type="text" class="form-control" id="txtName" style="width:180px;float:left;" />
+        <button id="btnSearch" class="btn btn-primary" onclick="Searchs()">搜索</button>
+    </div>
+    <ul id="user_tree" class="ztree" style="border: 1px solid #617775;overflow-y: scroll;height: 250px;width:160px;"></ul>
+</div>
+
+@*</div>*@
+
+@section scripts{
+    <script type="text/javascript">
+
+        /**
+     * 页面初始化
+     */
+        $(document).ready(function () {
+            onLoadZTree();
+        });
+
+        /**
+         * 加载树形结构数据
+         */
+        function onLoadZTree() {
+            var treeNodes;
+            $.ajax({
+                async: false,//是否异步
+                cache: false,//是否使用缓存
+                type: 'POST',//请求方式：post
+                dataType: 'json',//数据传输格式：json
+                url: "/Student/GetAllTree",//请求的action路径
+                error: function () {
+                    //请求失败处理函数
+                    alert('亲，请求失败！');
+                },
+                success: function (data) {
+                    //请求成功后处理函数
+                    treeNodes = data;//把后台封装好的简单Json格式赋给treeNodes
+                }
+            });
+
+            var setting = {
+                check: {
+                    enable: true,
+                    chkStyle: "checkbox",
+                    autoCheckTrigger: true,
+                    //chkboxType: { "Y": "ps", "N": "ps" },
+                    nocheckInherit: true,
+                    chkDisabledInherit: false,
+                    radioType: "level"
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPId: 0
+                    }
+                },
+                view: {
+                    fontCss: { color: "	#66009D"},
+                    showIcon: true,
+                    txtSelectedEnable: true
+                },
+                callback: {
+                    //点击文字选中
+                    onClick: function (e, treeId, treeNode, clickFlag) {
+                        if (treeNode.level != 0) {
+                            zTree.checkNode(treeNode, !treeNode.checked, true);     //单击文字 选中
+                        }
+                        zTree.expandNode(treeNode);         //单击文字展开
+                    }
+                }
+            };
+
+
+
+            debugger
+            var treeNodes = JSON.parse('@Html.Raw(ViewData["data"])');
+            var zTree = $.fn.zTree.init($("#user_tree"), setting, treeNodes);
+
+            Init();
+        }
+
+        function Init() {
+
+            var treeObj = $.fn.zTree.getZTreeObj("user_tree");
+            treeObj.expandAll(true);
+
+            var id = getUrlParam("id")
+            var ids = id.split(',');
+            for (var i = 0; i < ids.length; i++) {
+                var node = treeObj.getNodeByParam("id", ids[i]);
+                treeObj.checkNode(node,true,true);
+            }
+        }
+
+        //点击确定按钮
+        function submitForm() {
+            var name = "";
+            var id = "";
+            var treeObj = $.fn.zTree.getZTreeObj("user_tree");
+            var nodes = treeObj.getCheckedNodes();
+            for (var i = 0; i < nodes.length; i++) {
+                var model = nodes[i];
+                if (model.level != 0) {
+                    if (i == nodes.length - 1) {
+                        name += model.name;
+                        id += model.id;
+                    } else {
+                        name += model.name + ",";
+                        id += model.id + ",";
+                    }
+                }
+            }
+
+            parent.document.getElementById("txtId").value = name;
+            parent.document.getElementById("txtId").title = id;
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        }
+
+
+        //条件搜索
+        function Searchs() {
+            var name = $("#txtName").val();
+
+            $.post("/User/GetTreeData", { name: name }, function (result) {
+                if (result) {
+                    debugger
+                    var TreeNodes = JSON.parse(result);
+                    onLoadZTree(TreeNodes);
+                }
+            });
+
+        }
+
+        /**
+         * 获取参数
+         * name 参数名
+         */
+        function getUrlParam(name) {
+            //构造一个含有目标参数的正则表达式对象
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            //匹配目标参数
+            var r = window.location.search.substr(1).match(reg);
+            //返回参数值
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    </script>
+
+    <script type="text/javascript">
+        //动态背景  雪花
+        //var snow = function () {
+        //    if (1 == 1) {
+        //        $("body").append('<canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;"></canvas>');
+        //        var b = document.getElementById("christmasCanvas"), a = b.getContext("2d"), d = window.innerWidth, c = window.innerHeight;
+        //        b.width = d;
+        //        b.height = c;
+        //        for (var e = [], b = 0; b < 70; b++) {
+        //            e.push({ x: Math.random() * d, y: Math.random() * c, r: Math.random() * 4 + 1, d: Math.random() * 70 })
+        //        }
+        //        var h = 0;
+        //        window.intervral4Christmas = setInterval(function () {
+        //            a.clearRect(0, 0, d, c);
+        //            a.fillStyle = "rgba(255, 255, 255, 0.6)";
+        //            a.shadowBlur = 5;
+        //            a.shadowColor = "rgba(255, 255, 255, 0.9)";
+        //            a.beginPath();
+        //            for (var b = 0; b < 70; b++) {
+        //                var f = e[b];
+        //                a.moveTo(f.x, f.y);
+        //                a.arc(f.x, f.y, f.r, 0, Math.PI * 2, !0)
+        //            }
+        //            a.fill();
+        //            h += 0.01;
+        //            for (b = 0; b < 70; b++) {
+        //                if (f = e[b], f.y += Math.cos(h + f.d) + 1 + f.r / 2, f.x += Math.sin(h) * 2, f.x > d + 5 || f.x < -5 || f.y > c) {
+        //                    e[b] = b % 3 > 0 ? { x: Math.random() * d, y: -10, r: f.r, d: f.d } : Math.sin(h) > 0 ? { x: -5, y: Math.random() * c, r: f.r, d: f.d } : { x: d + 5, y: Math.random() * c, r: f.r, d: f.d }
+        //                }
+        //            }
+        //        }, 70)
+        //    }
+        //}
+        //snow();
+    </script>
+
+}
+

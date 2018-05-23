@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Suggest";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+
+
+}
+
+<h2>Suggest</h2>
+
+
+
+<section class="panel">
+    <div class="panel-body">
+
+        <div class="form-group">
+            <div class="input-group" style="width:360px;height:29px !important;">
+                @Html.TextBox("UserNameID", null, new { @class = "form-control", placeholder = "请输入用户姓名查询" })
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section scripts{
+
+    <script src="~/Scripts/bootsrap-suggest/bootstrap-suggest.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            getSuggestData();
+        });
+
+        var getSuggestData = (function () {
+
+            var bsSuggest;
+            return function () {
+                //如果存在对象就销毁插件，使其重新初始化插件（否则数据无法更新）
+                if (bsSuggest) bsSuggest.bsSuggest('destroy');
+
+                hhl.ajax('/Student/GetPartialStu', null, function (resultdata) {
+
+                    bsSuggest = $("#UserNameID").bsSuggest({
+                        data: resultdata,
+                        effectiveFields: ["s_id", "s_name", "s_age", "s_address", "s_phone"],
+                        effectiveFieldsAlias: { s_id: "编号", s_name: "姓名", s_age: "年龄", s_address: "地址", s_phone: "联系电话" },
+                        ignorecase: true,
+                        showHeader: true,
+                        autoSelect: false,
+                        autoDropup: true,
+                        idField: "s_id",
+                        keyField: "s_name",
+                        listAlign: 'right',
+                        getDataMethod: "data",//firstByUrl 第一次URL搜索//url
+                        allowNoKeyword: true,
+                        showBtn: true,     //不显示下拉按钮
+                        delayUntilKeyup: false, //获取数据的方式为 firstByUrl 时，延迟到有输入/获取到焦点时才请求数据
+                        fnAdjustAjaxParam: function (keyword, opts) {
+                            return {
+                                data: {
+                                    s_name: keyword
+                                }
+                            }
+                        }
+                    }).on('onSetSelectValue', function (e, keyword, data) {
+                        if (data === undefined) return;
+                        var name = data.s_name;
+                        var loginName = data.s_loginName;
+
+
+                    });
+                });
+            }
+        })();
+
+    </script>
+}
+
+

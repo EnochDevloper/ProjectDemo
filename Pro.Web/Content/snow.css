@@ -1,0 +1,22 @@
+body {
+    font: 14px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #404040;
+    line-height: 1;
+}
+
+body, .login-submit, .login-submit:before, .login-submit:after {
+    /*background: #373737 url("../images/bg.png") 0 0 repeat;*/
+}
+
+.LoginWindow {
+    display: block;
+    margin: 50px 0 0 50px;
+    width: 400px;
+    height: 350px;
+    border: 1px solid #666;
+    background: #373737 url("../images/bg.png") 0 0 repeat;
+}
+
+.login {
+    margin-left:5px;
+}

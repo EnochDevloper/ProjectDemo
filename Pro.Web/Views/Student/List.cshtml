@@ -1,0 +1,241 @@
+﻿@using Pro.Model
+@using Pro.Common
+@model PagedList<Student>
+@{
+    ViewBag.Title = "学生用户列表";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+    List<SelectListItem> itemList = ViewData["selectList"] as List<SelectListItem>;
+}
+
+
+<section class="panel panel-widget">
+    @{
+        string[] weekDays = { "星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        string weekday = weekDays[(int)DateTime.Now.DayOfWeek];
+        var time = DateTime.Now.ToString("yyyy-MM-dd") + " " + weekday;
+
+
+    }
+    当前时间 <span class="spanTime"></span>
+    <div class="panel-body" ng-app="MyApp" ng-controller="MyCtrl" id="MyApp">
+        <!--背景颜色条-->
+
+        <div class="widget box">
+            <div class="widget-header">
+                <h4 class="pull-left"><i class="icon-reorder"></i>搜索条件</h4>
+                <div class="toolbar no-padding pull-right">
+                    <div class="btn-group">
+                        <span class="btn btn-xs widget-collapse">
+                            <i class="icon-angle-down">
+                            </i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content bg-white">
+                <form class="form-group" id="formPageSearch" method="post">
+                    <input name="url" type="hidden" value="List" />
+                    <input name="page" type="hidden" value="1" />
+                    <input name="pagesize" type="hidden" value="5" />
+                    <input name="sort" type="hidden" value="" />
+                    <div class="form-group col-sm-3">
+                        <input class="form-control" name="stuName" placeholder="请输入学生姓名" type="text">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.DropDownList("Status", itemList, new { @class = "form-control", onchange = "hhl.ajaxPartial(1)" })
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <button type="button" onclick="hhl.ajaxPartial(1);" class="btn btn-success" data-toggle="tooltip" title="搜索"><i class="icon-search"></i>&nbsp; 搜索</button>
+                        <a onclick="OpenInsert()" data-toggle="tooltip" title="添加" class="btn btn-info"><i class="icon-plus"></i>&nbsp; 添加</a>
+                        <a class="btn btn-danger" title="禁用" id="btnDisable" data-toggle="tooltip"><i class="icon-off">&nbsp; 禁用</i></a>
+                        <a class="btn btn-success" title="启用" id="btnEnable" data-toggle="tooltip"><i class="icon-ok">&nbsp; 启用</i></a>
+                        <button type="button" onclick="hhl.Refresh()" class="btn btn-info" data-toggle="tooltip" title="刷新"><i class="icon-refresh"></i>&nbsp; 刷新</button>
+                    </div>
+                    <i class="clearfix"></i>
+                </form>
+            </div>
+        </div>
+
+        <!---如果table不放在 panel-body 中，面板会和表格连接 没有空隙--->
+        <div id="pageTable">
+            @Html.Partial("_StuList", Model)
+        </div>
+
+        @*<div id="pageList" class="form-group">
+            <span>每页显示</span>
+            <select id="sel_pageSize" ng-model="pageSize" ng-change="Search()">
+                <option ng-repeat="page in pageSizeList" ng-selected="pageSizeList[3]">{{page.pagesize}}</option>
+            </select>
+            <span>条</span>
+        </div>*@
+
+        <!--学生详情-->
+        <div class="modal fade" id="DetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">查看详细信息</h4>
+                    </div>
+                    <div class="modal-body" id="UserDetails">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+            var scope = angular.element($("#MyApp")).scope();
+            scope.PageLoad();
+        });
+
+        var app = angular.module('MyApp', []);
+
+        app.controller('MyCtrl', ['$scope', '$http', function ($scope, $http) {
+
+            $scope.pageIndex = $("input[name='page']").val();
+            $scope.pageSize = 10;
+
+            //加载事件
+            $scope.PageLoad = function () {
+
+                //每页显示条数
+                var pageList = [2, 3, 5, 10];
+                var pageSizeList = [];
+                for (var i = 0; i < pageList.length; i++) {
+                    pageSizeList.push({ pagesize: pageList[i] });
+                }
+
+                $scope.pageSizeList = pageSizeList;
+
+            }
+
+            $scope.Search = function () {
+                var pagesize = $scope.pageSize;
+                $("input[name='pagesize']").val(pagesize);
+                hhl.ajaxPartial(1);
+            }
+        }]);
+
+
+        $(".spanTime").text('@time');
+
+        //编辑学生信息
+        function OpenUpdate(id) {
+            var isSuccess = false;
+            hhl.dialog.openUpdate(["/Student/Edit?id=" + id,], "修改学生信息", {
+                area: ["500px", "550px"],
+            });
+        }
+
+
+        //添加学生信息
+        function OpenInsert() {
+            var isSuccess = false;
+            hhl.dialog.openUpdate(["/Student/Insert",], "添加学生信息", {
+                area: ["500px", "550px"],
+            });
+        }
+
+
+        //删除学生信息
+        function ConfrimDelete(id) {
+            hhl.message.confirm("是否确定删除该名学生", function (callback) {
+                if (callback) {
+                    $.post("/Student/DeleteStu", { stu_id: id }, hhl.callbackStatus)
+                }
+            },7)
+        }
+
+
+        //复选框全选
+        function checkAll(obj) {
+            $("input[name='s_id']").prop("checked", $(obj).prop("checked"));
+        }
+
+        $(function () {
+
+            //批量禁用
+            $("#btnDisable").on("click", function () {
+                var disChk = $("input[name='s_id']:checked");
+
+                if (disChk.length > 0) {
+                    var chkId = "";
+                    disChk.each(function () {
+                        chkId = chkId + this.value + ",";
+                    });
+                    chkId = chkId.substring(0, chkId.lastIndexOf(','));
+
+                    hhl.ajax("/Student/UpdateStatus", { id: chkId, status: 0 }, hhl.callbackStatus);
+                } else {
+                    hhl.notify.error("请选择你要禁用的学生", "提示");
+                }
+            });
+
+            //批量启用
+            $("#btnEnable").on("click", function () {
+                var EnableChk = $("input[name='s_id']:checked");
+
+                if (EnableChk.length > 0) {
+                    var chkId = "";
+                    EnableChk.each(function () {
+                        chkId = chkId + this.value + ",";
+                    });
+                    chkId = chkId.substring(0, chkId.lastIndexOf(','));
+                    hhl.ajax("/Student/UpdateStatus", { id: chkId, status: 1 }, hhl.callbackStatus);
+                } else {
+                    hhl.notify.error("请选择你要启用的学生", "提示");
+                }
+            });
+        });
+
+
+        //修改单个状态
+        function UpdateSingleStatus(id, status) {
+            hhl.ajax("/Student/UpdateStatus", { id: id, status: status }, hhl.callbackStatus);
+        }
+
+
+        //查看详情
+        function Details(id) {
+            $.ajax({
+                type: "post",
+                data: { id: id },
+                datatype: "json",
+                url: "GetDetails",
+                cache: false,
+                success: function (sb) {
+                    $("#UserDetails").html(sb);
+                }
+            });
+        }
+
+
+        //修改排序
+        function ChangeSort(obj) {
+            var icon = $(obj).find("i");
+            var sortName = icon.data("value");
+
+            if (icon.hasClass("icon-sort")) {
+                sortName = sortName + "-desc";
+            }
+            else if (icon.hasClass("icon-sort-down")) {
+                sortName = sortName + "-asc";
+            }
+
+            $("input[name='sort']").val(sortName);
+            var page = $("input[name='page']").val();
+
+            hhl.ajaxPartial(page);
+
+        }
+
+    </script>
+}

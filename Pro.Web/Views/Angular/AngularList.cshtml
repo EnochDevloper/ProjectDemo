@@ -1,0 +1,401 @@
+﻿@using Pro.Extension
+@using Pro.Common
+@using Pro.Model
+@model PagedList<Student>
+
+@{
+    ViewBag.Title = "AnaularList 列表";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+
+    var itemList = ViewData["selectList"] as List<SelectListItem>;
+}
+
+
+<section class="panel panel-widget">
+    <div class="panel-body" ng-app="MyApp" ng-controller="MyCtrl" id="MyApp">
+        <!--背景颜色条-->
+
+        <div class="widget box">
+            <div class="widget-header">
+                <h4 class="pull-left"><i class="icon-reorder"></i>搜索条件</h4>
+                <div class="toolbar no-padding pull-right">
+                    <div class="btn-group">
+                        <span class="btn btn-xs widget-collapse">
+                            <i class="icon-angle-down">
+                            </i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content bg-white">
+                <form class="form-group" id="formPageSearch">
+                    <input name="url" type="hidden" value="AnaularList" />
+                    <input name="pagesize" type="hidden" value="10" />
+                    <input name="page" type="hidden" value="1" />
+                    <input name="sort" type="hidden" value="s_createDate-desc" />
+                    <div class="form-group col-sm-3">
+                        <input class="form-control" id="txtName" name="name" placeholder="请输入姓名/登录名" type="text">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        @Html.DropDownList("Status", itemList, new { @class = "form-control", onchange = "PageInit()" })
+                    </div>
+                    @*<div class="form-group col-sm-3">
+                            <input class="form-control" id="txtLoginName" name="loginname" placeholder="请输入登陆名" type="text">
+                        </div>*@
+                    <div class="form-group col-sm-3">
+                        <input class="form-control" id="txtAge" name="age" placeholder="请输入年龄" type="text">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <input class="form-control" id="txtId" name="txtId" placeholder="请选择人员" type="text" title="" value="" onclick="GetSelect()">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <input class="form-control txtDate wicon" id="txtStart" name="startTime" placeholder="请输入开始时间" type="text">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <input class="form-control txtDate wicon" id="txtEnd" name="EndTime" placeholder="请输入结束时间" type="text">
+                    </div>
+                    <div class="form-group col-sm-6 text-left">
+                        <button type="button" ng-click="Searchs()" class="btn btn-success" data-toggle="tooltip" title="搜索"><i class="icon-search"></i> &nbsp;&nbsp;搜索</button>
+                        <a ng-click="Reload()" data-toggle="tooltip" title="刷新" class="btn btn-info"><i class="icon-refresh"></i> &nbsp;&nbsp;刷新</a>
+                        <a href="/Angular/ShowAddStu" data-toggle="tooltip" title="添加" class="btn btn-info"><i class="icon-plus"></i> &nbsp;&nbsp;添加</a>
+                        <button type="button" onclick="GetInfo()" class="btn btn-primary" data-toggle="tooltip" title="获取选中的学生">获取选中的学生</button>
+                        <button type="button" onclick="GetSelect()" class="btn btn-primary" data-toggle="tooltip" title="选择人员">选择人员</button>
+                    </div>
+                    <i class="clearfix"></i>
+                </form>
+            </div>
+        </div>
+
+        <div id="pageTable">
+            <!---如果table不放在 panel-body 中，面板会和表格连接 没有空隙--->
+            <table id="tblList" class="table table-striped table-hover table-bordered bg-white">
+                <tr>
+                    <th class="th-checkbox">
+                        <label class="checkbox-inline" style=" font-weight: bold;">
+                            <input type="checkbox" onclick="chkAll(this)"> 全选
+                        </label>
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_name)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_loginName)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_passWord)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_address)
+                    </th>
+                    <th class="th-title" name="th-sort" onclick="hhl.ChangeSort(this);" style="cursor:pointer">
+                        @Html.DisplayNameFor(model => model[0].s_sex)
+                        <i class="icon-sort sortSex" data-value="s_sex" data-sort="sort">&nbsp;</i>
+                    </th>
+                    <th class="th-title" name="th-sort" onclick="hhl.ChangeSort(this);" style="cursor:pointer">
+                        @Html.DisplayNameFor(model => model[0].s_age)
+                        <i class="icon-sort sortAge" data-value="s_age" data-sort="sort">&nbsp;</i>
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_phone)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_status)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_remark)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_createDate)
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_GradeID)
+                    </th>
+                    <th class="th-title">操作</th>
+                </tr>
+
+                <tr ng-repeat="stu in list | filter:fun">
+                    <td class="th-title">
+                        <label class="checkbox-inline">
+                            <input name="s_id" value="{{stu.s_id}}" type="checkbox" />
+                        </label>
+                    </td>
+                    <td>
+                        {{stu.s_name}}
+                    </td>
+                    <td>
+                        {{stu.s_loginName}}
+                    </td>
+                    <td>
+                        {{stu.s_passWord}}
+                    </td>
+                    <td>
+                        {{stu.s_address}}
+                    </td>
+                    <td>
+                        {{stu.SexName}}
+                    </td>
+                    <td>
+                        {{stu.s_age}}
+                    </td>
+                    <td>
+                        {{stu.s_phone}}
+                    </td>
+                    <td>
+                        <a ng-click="UpdateSingleStatus($event.target,1)" data-value="{{stu.s_id}}" ng-show="{{stu.s_status == 0 ? 'true' : 'false'}}" class="btn btn-danger btn-xs" uib-tooltip="禁用" id="btnSingleEnable"><i class="icon-off"></i></a>
+                        <a ng-click="UpdateSingleStatus($event.target,0)" data-value="{{stu.s_id}}" ng-show="{{stu.s_status == 1 ? 'true' : 'false'}}" class="btn btn-success btn-xs" uib-tooltip="启用" id="btnSingleDisable"><i class="icon-ok"></i></a>
+                    </td>
+                    <td>
+                        {{stu.s_remark}}
+                    </td>
+                    <td>
+                        {{stu.s_createDate.slice(6,-2) | date:'yyyy-MM-dd'}}
+                    </td>
+                    <td>
+                        {{stu.GradeName}}
+                    </td>
+                    <td>
+                        <a ng-click="OpenUpdate($event.target)" data-value="{{stu.s_id}}" uib-tooltip="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
+                        @*<a href="Details/{{stu.s_id}}" data-toggle="tooltip" title="预览" class="btn btn-success btn-xs"><i class="icon-eye-open"></i></a>*@
+                        <a ng-show="{{stu.s_status == 1 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="删除" class="btn btn-danger btn-xs"><i class="icon-trash"></i> 删除</a>
+                        <a ng-show="{{stu.s_status == 0 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="恢复" class="btn btn-success btn-xs"><i class="icon-trash"></i> 恢复</a>
+                    </td>
+                </tr>
+
+            </table>
+            <div class="form-group">
+                <span>当前第{{pageIndex}}/{{totalPage}}页 共{{total}}条记录 每页{{pageSize}}条</span>
+                <uib-pagination style="margin-top:5px;" id="pagination" class="pagination-sm pull-right" total-items="total" ng-model="pageIndex" ng-change="Searchs('')" boundary-links="true"
+                                force-ellipses="false" first-text="首页" last-text="末页" items-per-page="pageSize" maxSize="5" previous-text="上一页" next-text="下一页"></uib-pagination>
+
+            </div>
+            <div class="form-group">
+                <span>每页显示</span>
+                <select ng-model="pageSize" ng-change="Searchs()">
+                    <option ng-repeat="page in pageSizeList" value="{{page.pagesize}}" ng-selected="$index==1">{{page.pagesize}}</option>
+                </select>
+                <span>条</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <script type="text/javascript">
+        //页面加载
+        $(function () {
+            $(".txtDate").jeDate();
+            $(".txtDate").css("cursor", "pointer").css("background-color", "white");
+
+            var scope = angular.element($("#MyApp")).scope();
+            scope.PagedLoad();
+
+            PageInit();
+
+
+            //按下回车键 进行搜索
+            $(document).keypress(function (e) {
+                if (e.keyCode == 13) {
+                    PageInit();
+                }
+            });
+        });
+
+        //页面加载
+        function PageInit() {
+            var scope = angular.element($("#MyApp")).scope();
+            scope.PageLoad();
+        }
+
+        /**
+         * 实现全选
+         */
+        function chkAll(obj) {
+            $("input[name='s_id']").prop("checked", $(obj).prop("checked"));
+        }
+
+        /**
+         * 获取选中的人
+         */
+        function GetInfo() {
+            var chk = $("input[name='s_id']:checked");
+            var chkVal = "";
+            chk.each(function () {
+                chkVal = chkVal + this.value + ",";
+            });
+            if (chkVal) {
+                chkVal = chkVal.substring(0, chkVal.lastIndexOf(','));
+                $.post("/Angular/GetStudentInfo", { sid: chkVal }, function (result) {
+                    if (result) {
+                        $("#txtName").val(result.stuName);
+                    }
+                });
+            } else {
+                alert("请选择人员");
+            }
+        }
+
+        /**
+         * 是否确认删除
+         */
+        function ConfirmDelete(obj) {
+            var id = $(obj).data("value");
+            var way = $(obj).attr("uib-tooltip");
+            hhl.message.confirm("请问是否" + way + "该名学员", function (result) {
+                if (result) {
+                    $.post("/Angular/UpdateStatus", { id: id }, hhl.AngularStatus);
+                }
+            });
+        };
+
+        /**
+         * 选择人员
+         */
+        function GetSelect() {
+            hhl.dialog.open("/Student/TreeIndex?id=" + escape($("#txtId").attr("title")), "选择人员", {
+                area: ["200px", "360px"],
+                btn: ["确定", "关闭"]
+            });
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        // angular.module 函数创建模块
+        var app = angular.module('MyApp', ['ui.bootstrap', 'angular-loading-bar']);
+
+        //使用 ng-controller 指令来添加应用的控制器
+        app.controller('MyCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+
+            $scope.pageIndex = 1;
+            $scope.pageSize = 10;
+            $scope.sortName = 's_createDate-desc';;
+
+            //加载事件
+            $scope.PageLoad = function () {
+                $scope.Searchs($scope.sortName);
+            }
+            $scope.PagedLoad = function () {
+                //每页显示条数
+                var pageList = [5, 10, 15, 20];
+                var pageSizeList = [];
+                for (var i = 0; i < pageList.length; i++) {
+                    pageSizeList.push({ pagesize: pageList[i] });
+                }
+
+                $scope.pageSizeList = pageSizeList;
+            }
+
+            //绑定客户/排序
+            $scope.Searchs = function (sortName) {
+                $scope.GetSearch();
+                sortName = $("input[name='sort']").val();
+                $scope.condition = { page: $scope.pageIndex, pageSize: $scope.pageSize, sortName: sortName, searchs: $scope.searchs };
+                $http.post('/Angular/GetStudentByCondition', $scope.condition)
+                    .success(function (data) {
+                        $scope.list = data.data;
+                        $scope.pageIndex = data.PageIndex;
+                        $scope.total = data.total;
+                        $scope.totalPage = data.TotalPage;
+                    });
+
+            };
+
+            //刷新
+            $scope.Reload = function () {
+
+                $("#txtName").val('');
+                $("#txtAddress").val('')
+                $("#txtLoginName").val('')
+                $("#txtAge").val('')
+                $("#txtId").val('').attr("title", '');
+                $("#txtStart").val('')
+                $("#txtEnd").val('')
+                $("#Status").find("option[value='-1']").prop("selected", "selected");
+                $("input[name='sort']").val($scope.sortName);
+                $scope.Searchs($scope.sortName);
+            }
+
+            //搜索条件
+            $scope.GetSearch = function () {
+                $scope.searchs = [];
+                $scope.searchs.push({ property: "s_name/s_loginName", value: $("#txtName").val(), method: "Contains" })
+                $scope.searchs.push({ property: "s_status", value: $("#Status").val(), method: "==" })
+                $scope.searchs.push({ property: "s_age", value: $("#txtAge").val(), method: "num" })
+                $scope.searchs.push({ property: "s_id", value: $("#txtId").attr("title"), method: "equals" })
+                $scope.searchs.push({ property: "s_createDate", value: $("#txtStart").val() + "," + $("#txtEnd").val(), method: "DateTime" })
+            }
+
+            //编辑学生信息
+            $scope.OpenUpdate = function (obj) {
+                var isSuccess = false;
+
+                var id = $(obj).data("value");
+                if (!id) {
+                    id = $(obj).parents("td").find("a:first").data("value");
+                }
+
+                hhl.dialog.openUpdate(["/Student/Edit?id=" + id,], "修改学生信息", {
+                    area: ["500px", "550px"],
+                }, 1);
+
+            }
+
+            //修改状态
+            $scope.UpdateSingleStatus = function (obj, status) {
+
+                var id = $(obj).data("value");
+                if (!id) {
+                    id = $(obj).parent().data("value");
+                }
+
+                hhl.ajax("/Student/UpdateStatus", { id: id, status: status }, hhl.AngularStatus);
+            }
+
+            //年龄大于等于10
+            $scope.fun = function (e) { return e.s_age >= 10; };
+
+
+        }]);
+
+
+    </script>
+
+    <script type="text/javascript">
+        //动态背景  雪花
+        var snow = function () {
+            if (1 == 1) {
+                $("body").append('<canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;"></canvas>');
+                var b = document.getElementById("christmasCanvas"), a = b.getContext("2d"), d = window.innerWidth, c = window.innerHeight;
+                b.width = d;
+                b.height = c;
+                for (var e = [], b = 0; b < 70; b++) {
+                    e.push({ x: Math.random() * d, y: Math.random() * c, r: Math.random() * 4 + 1, d: Math.random() * 70 })
+                }
+                var h = 0;
+                window.intervral4Christmas = setInterval(function () {
+                    a.clearRect(0, 0, d, c);
+                    a.fillStyle = "rgba(255, 255, 255, 0.6)";
+                    a.shadowBlur = 5;
+                    a.shadowColor = "rgba(255, 255, 255, 0.9)";
+                    a.beginPath();
+                    for (var b = 0; b < 70; b++) {
+                        var f = e[b];
+                        a.moveTo(f.x, f.y);
+                        a.arc(f.x, f.y, f.r, 0, Math.PI * 2, !0)
+                    }
+                    a.fill();
+                    h += 0.01;
+                    for (b = 0; b < 70; b++) {
+                        if (f = e[b], f.y += Math.cos(h + f.d) + 1 + f.r / 2, f.x += Math.sin(h) * 2, f.x > d + 5 || f.x < -5 || f.y > c) {
+                            e[b] = b % 3 > 0 ? { x: Math.random() * d, y: -10, r: f.r, d: f.d } : Math.sin(h) > 0 ? { x: -5, y: Math.random() * c, r: f.r, d: f.d } : { x: d + 5, y: Math.random() * c, r: f.r, d: f.d }
+                        }
+                    }
+                }, 70)
+            }
+        }
+        snow();
+    </script>
+}

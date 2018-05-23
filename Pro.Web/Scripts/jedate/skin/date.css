@@ -1,0 +1,22 @@
+﻿body {
+}
+.jedatebox {
+    cursor:pointer;
+}
+.jedateyy:hover {
+    background-color:#49c1ef;
+}
+.jedatemm:hover{
+    background-color:#49c1ef;
+}
+.ymdropul > li:hover {
+    background-color: #59afef;
+}
+
+.jedaul > li:hover {
+    background-color: #59afef;
+}
+/* 按钮 */
+.jedatebtn > span:hover{
+    background-color:#117b8e
+}

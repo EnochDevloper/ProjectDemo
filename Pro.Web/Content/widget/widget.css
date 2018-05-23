@@ -1,0 +1,133 @@
+.widget .no-padding .btn{
+	background-color: #f3f3f3;
+	background-image: none;
+	filter: none;
+	border: 0;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	padding: 6px 13px;
+	text-shadow: none;
+	font-size: 14px;
+	font-weight: normal;
+	color: #333;
+	font-size: 13px;
+	cursor: pointer;
+	border: 1px solid #d9d9d9;
+	border: 1px solid rgba(0,0,0,0.13);
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	position: relative;
+	z-index: 1;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+}
+
+.widget .no-padding  .btn:hover{
+	color: #333;
+	background-color: #f8f8f8;
+	border-color: rgba(0,0,0,0.13);
+}
+
+.widget .no-padding  .btn:active{
+	background-color: #e6e6e6;
+	border-color: rgba(0,0,0,0.13);
+	border-top: 1px solid #a6a6a6;
+}
+
+.widget .no-padding  .btn.disabled{
+	background-color: #f3f3f3;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	border-top: 1px solid rgba(0,0,0,0.13);
+}
+
+.widget .no-padding  .btn.disabled:hover{
+	cursor: not-allowed;
+}
+
+.widget {
+	margin-top: 0;
+	padding: 0;
+}
+
+.widget .widget-header {
+	margin-bottom: 15px;
+	border-bottom: 1px solid #ececec;
+	*zoom: 1;
+}
+
+.widget .widget-header:before,.widget .widget-header:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+
+.widget .widget-header:after {
+	clear: both;
+}
+
+.widget .widget-header h4 {
+	display: inline-block;
+	color: #555;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 7px;
+    /*width:95%;*/
+}
+
+.widget .widget-header h4 i {
+	font-size: 14px;
+	margin-right: 5px;
+	color: #6f6f6f;
+}
+
+.widget .widget-header .toolbar {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+
+.widget.box {
+	border: 1px solid #d9d9d9;
+}
+
+.widget.box .widget-header {
+	background: #F1F2F7;
+	border-bottom-color: #d9d9d9;
+	line-height: 32px;
+	padding: 0 0 0 12px;
+	margin-bottom: 0;
+}
+
+.widget.box .widget-header h4 {
+	margin-top: 10px;
+}
+
+/*.widget.box .widget-header .toolbar {
+	
+}*/
+
+.widget.box .widget-header .toolbar.no-padding {
+	margin: -1px;
+}
+
+.widget.box .widget-header .toolbar.no-padding .btn {
+	font-size: 13px;
+	line-height: 23px;
+	margin-top: 0;
+}
+
+.widget.box .widget-content {
+	padding-top: 15px;
+}
+.form-horizontal .widget-content .form-group {
+    margin-right: 0!important;
+    margin-left: 0!important;
+}

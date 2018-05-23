@@ -1,0 +1,126 @@
+﻿@model Pro.Model.Student
+
+@{
+    ViewBag.Title = "添加 AddStudent";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+    var loginname = TempData["login"].ToString();
+    string name = Request["name"].ToString();
+}
+
+@using (Html.BeginForm())
+{
+    <section class="panel panel-widget">
+        <input type="hidden" name="txtName" value="@name" />
+        <div class="panel-heading bg-white">
+            <h3 class="panel-title panel-title-list">
+                <i class="icon-th"></i>添加Student
+            </h3>
+        </div>
+        <div class="panel-body bg-white">
+            <div class="form-horizontal tasi-form">
+                <div class="col-md-12">
+                    @Html.ValidationSummary(true)
+                    <div class="widget box">
+                        <div class="widget-header">
+                            <h4><i class="icon-reorder"></i>添加Student</h4>
+                        </div>
+                        <div class="widget-content">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_name, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_name, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_name) })
+                                    @Html.ValidationMessageFor(model => model.s_name)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_loginName, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_loginName, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_loginName) })
+                                    @Html.ValidationMessageFor(model => model.s_loginName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_passWord, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_passWord, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_passWord) })
+                                    @Html.ValidationMessageFor(model => model.s_passWord)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_address, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_address, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_address) })
+                                    @Html.ValidationMessageFor(model => model.s_address)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_sex, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_sex, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_sex) })
+                                    @Html.ValidationMessageFor(model => model.s_sex)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_age, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_age, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_age) })
+                                    @Html.ValidationMessageFor(model => model.s_age)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_phone, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_phone, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_phone) })
+                                    @Html.ValidationMessageFor(model => model.s_phone)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_status, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_status, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_status) })
+                                    @Html.ValidationMessageFor(model => model.s_status)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_remark, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_remark, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_remark) })
+                                    @Html.ValidationMessageFor(model => model.s_remark)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_createDate, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_createDate, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_createDate) })
+                                    @Html.ValidationMessageFor(model => model.s_createDate)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.s_GradeID, new { @class = "control-label col-sm-2" })
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.s_GradeID, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_GradeID) })
+                                    @Html.ValidationMessageFor(model => model.s_GradeID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer bg-white">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-info">提 交</button>&nbsp;&nbsp;
+                    @Html.ActionLink("返 回", "AngularList", null, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            console.log('@loginname');
+        });
+    </script>
+}
