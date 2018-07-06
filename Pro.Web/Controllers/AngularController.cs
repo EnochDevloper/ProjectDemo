@@ -165,7 +165,7 @@ namespace Pro.Web.Controllers
 
             if (!string.IsNullOrEmpty(id))
             {
-                int sId = id.ToInt32();
+                Guid sId =new Guid(id.ToString());
                 var m_student = stuReporitory.GetFirstOrDefault(c => c.s_id == sId);
                 if (m_student != null)
                 {

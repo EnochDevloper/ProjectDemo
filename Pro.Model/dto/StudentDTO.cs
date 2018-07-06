@@ -11,7 +11,7 @@ namespace Pro.Model.dto
     {
 
         [Display(Name = "主键ID")]
-        public int s_id { get; set; }
+        public Guid s_id { get; set; }
 
         [Display(Name = "姓名")]
         public string s_name { get; set; }

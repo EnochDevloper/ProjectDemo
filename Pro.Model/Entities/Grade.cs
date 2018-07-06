@@ -12,8 +12,8 @@ namespace Pro.Model
     {
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int GradeID { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		public Guid GradeID { get; set; }
 
 		[StringLength(50)]
 		public string GradeName { get; set; }

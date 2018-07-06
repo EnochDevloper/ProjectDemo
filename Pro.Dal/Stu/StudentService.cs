@@ -93,7 +93,7 @@ namespace Pro.Dal.Stu
                 }
             }
             //返回总条数
-            count = query.FutureCount();
+            count = query.Count();
 
             query = SortTools.SortingAndPaging<StudentDTO>(query, sortName, page, pagesize);
             return query.ToList();
@@ -108,7 +108,8 @@ namespace Pro.Dal.Stu
         /// <returns></returns>
         public Student GetModel(int id)
         {
-            return StuBLL.GetFirstOrDefault(c => c.s_id == id);
+            Guid sId = new Guid(id.ToString());
+            return StuBLL.GetFirstOrDefault(c => c.s_id == sId);
         }
 
 

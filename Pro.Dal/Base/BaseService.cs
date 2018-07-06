@@ -279,7 +279,7 @@ namespace Pro.Dal.Base
             }
 
             // 分页 一定注意： Skip 之前一定要 OrderBy
-            rowCount = query.FutureCount();
+            rowCount = query.Count();
             if (CtrPagerIndex != null)
             {
                 CtrPagerIndex.RecordCount = rowCount;
@@ -321,7 +321,7 @@ namespace Pro.Dal.Base
                 }
             }
 
-            rowCount = query.FutureCount();
+            rowCount = query.Count();
 
             if (CtrPagerIndex != null)
             {
@@ -383,7 +383,7 @@ namespace Pro.Dal.Base
 
                 // 分页 一定注意： Skip 之前一定要 OrderBy
 
-                rowCount = query.FutureCount();
+                rowCount = query.Count();
 
                 if (CtrPagerIndex != null)
                 {

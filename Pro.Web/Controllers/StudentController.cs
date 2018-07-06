@@ -263,7 +263,7 @@ namespace Pro.Web.Controllers
             ajax.Message = "系统异常";
             if (!string.IsNullOrEmpty(stu_id))
             {
-                int Id = stu_id.ToInt32();
+                Guid Id =new Guid(stu_id.ToString());
                 Expression<Func<Student, bool>> parm = c => c.s_id == Id;
                 int result = baseService.DelBy(parm);
                 if (result > 0)
@@ -306,7 +306,7 @@ namespace Pro.Web.Controllers
             {
                 TreeVO entity = new TreeVO();
                 entity.id = item.GradeID;
-                entity.pid = 0;
+                entity.pid = Guid.Empty;
                 entity.name = item.GradeName;
                 tree.Add(entity);
             }
@@ -314,13 +314,12 @@ namespace Pro.Web.Controllers
             foreach (var item in stuList)
             {
                 TreeVO entity = new TreeVO();
-                if (item.s_id >= 4)
-                {
+                
                     entity.id = item.s_id;
                     entity.pid = item.s_GradeID;
                     entity.name = item.s_name;
                     tree.Add(entity);
-                }
+                
             }
             //var tree = (from c in ObjEntity.Grade
             //            join d in ObjEntity.Student on c.GradeID equals d.s_GradeID

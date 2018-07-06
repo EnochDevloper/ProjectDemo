@@ -14,6 +14,7 @@ using System.Web.Compilation;
 using Pro.Dal.Stu;
 using Pro.Dal.Base;
 using Autofac.Core.Activators.Reflection;
+using System.Data.Entity;
 
 namespace Pro.Web
 {
@@ -25,6 +26,8 @@ namespace Pro.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFDbContext>());
 
             //启用autofac注入
             //AutoFacInit();

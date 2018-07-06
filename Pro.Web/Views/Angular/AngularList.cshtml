@@ -75,6 +75,9 @@
                             <input type="checkbox" onclick="chkAll(this)"> 全选
                         </label>
                     </th>
+                    @*<th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_id)
+                    </th>*@
                     <th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_name)
                     </th>
@@ -119,6 +122,9 @@
                             <input name="s_id" value="{{stu.s_id}}" type="checkbox" />
                         </label>
                     </td>
+                    @*<td>
+                        {{stu.s_id}}
+                    </td>*@
                     <td>
                         {{stu.s_name}}
                     </td>

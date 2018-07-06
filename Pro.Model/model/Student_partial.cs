@@ -40,18 +40,18 @@ namespace Pro.Model
             }
         }
 
-        [NotMapped]
-        [Display(Name = "年级")]
-        public GradeName GradeValue
-        {
-            get
-            {
-                return (GradeName)(this.s_GradeID == null ? 0 : this.s_GradeID);
-            }
-            set
-            {
-                this.s_GradeID = Convert.ToInt32(value);
-            }
-        }
+        //[NotMapped]
+        //[Display(Name = "年级")]
+        //public GradeName GradeValue
+        //{
+        //    get
+        //    {
+        //        return (GradeName)(this.s_GradeID == null ? Guid.Empty : this.s_GradeID);
+        //    }
+        //    set
+        //    {
+        //        this.s_GradeID = new Guid(value);
+        //    }
+        //}
     }
 }

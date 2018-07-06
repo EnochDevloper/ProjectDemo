@@ -139,7 +139,7 @@ namespace Pro.Repository.Repository
                     query = query.Where(parm);
                 }
             }
-            count = query.FutureCount();
+            count = query.Count();
             query = SortTools.SortingAndPaging<TEntity>(query, Sort, page, pageSize, true);
 
             List<TEntity> queryList = query.ToList();
@@ -196,7 +196,7 @@ namespace Pro.Repository.Repository
         /// <returns></returns>
         public int GetCount()
         {
-            return GetRepositoy().FutureCount();
+            return GetRepositoy().Count();
         }
 
         /// <summary>

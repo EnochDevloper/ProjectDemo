@@ -37,7 +37,7 @@ namespace Pro.Web.Controllers
             {
                 TreeVO entity = new TreeVO();
                 entity.id = item.GradeID;
-                entity.pid = 0;
+                entity.pid = Guid.Empty;
                 entity.name = item.GradeName;
                 tree.Add(entity);
             }
