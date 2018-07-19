@@ -27,6 +27,7 @@ namespace Pro.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            //支持“EFDBContext”上下文的模型已在数据库创建后发生更改。请考虑使用 Code First 迁移更新数据库
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFDbContext>());
 
             //启用autofac注入
