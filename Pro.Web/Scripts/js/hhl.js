@@ -531,6 +531,7 @@ var hhl = hhl || {};
     页面加载重新排序
     */
     function SortPage(sort, obj) {
+        
         if (!sort) {
             sort = $("input[name='sort']").val();
         }

@@ -1,7 +1,8 @@
 ﻿@using Pro.Extension
 @using Pro.Common
 @using Pro.Model
-@model PagedList<Student>
+@using Pro.Model.dto
+@model PagedList<StudentDTO>
 
 @{
     ViewBag.Title = "AnaularList 列表";
@@ -75,9 +76,9 @@
                             <input type="checkbox" onclick="chkAll(this)"> 全选
                         </label>
                     </th>
-                    @*<th class="th-title">
+                    <th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_id)
-                    </th>*@
+                    </th>
                     <th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_name)
                     </th>
@@ -111,7 +112,7 @@
                         @Html.DisplayNameFor(model => model[0].s_createDate)
                     </th>
                     <th class="th-title">
-                        @Html.DisplayNameFor(model => model[0].s_GradeID)
+                        @Html.DisplayNameFor(model => model[0].GradeName)
                     </th>
                     <th class="th-title">操作</th>
                 </tr>
@@ -122,9 +123,9 @@
                             <input name="s_id" value="{{stu.s_id}}" type="checkbox" />
                         </label>
                     </td>
-                    @*<td>
-                        {{stu.s_id}}
-                    </td>*@
+                    <td>
+                        {{(pageIndex-1)*pageSize+$index+1}}
+                    </td>
                     <td>
                         {{stu.s_name}}
                     </td>
@@ -161,7 +162,6 @@
                     </td>
                     <td>
                         <a ng-click="OpenUpdate($event.target)" data-value="{{stu.s_id}}" uib-tooltip="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
-                        @*<a href="Details/{{stu.s_id}}" data-toggle="tooltip" title="预览" class="btn btn-success btn-xs"><i class="icon-eye-open"></i></a>*@
                         <a ng-show="{{stu.s_status == 1 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="删除" class="btn btn-danger btn-xs"><i class="icon-trash"></i> 删除</a>
                         <a ng-show="{{stu.s_status == 0 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="恢复" class="btn btn-success btn-xs"><i class="icon-trash"></i> 恢复</a>
                     </td>

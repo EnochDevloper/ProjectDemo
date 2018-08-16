@@ -49,8 +49,8 @@ namespace Pro.Web.Controllers
 
             #endregion
 
-            var dataList = stuService.GetAllStu("", "", "", 1, 10);
-            return View(dataList);
+            //var dataList = stuService.GetAllStu("", "", "", 1, 10);
+            return View();
         }
         #endregion
 
@@ -142,7 +142,7 @@ namespace Pro.Web.Controllers
                 string[] ids = sid.Split(',');
                 for (int i = 0; i < ids.Length; i++)
                 {
-                    var id = ids[i].ToInt32();
+                    var id = new Guid(ids[i]);
                     if (!string.IsNullOrEmpty(id.ToString()))
                     {
                         name += baseService.GetById(id).s_name + ",";
@@ -153,7 +153,7 @@ namespace Pro.Web.Controllers
             {
                 name = name.Substring(0, name.Length - 1);
             }
-            return Json(new { stuName = name });
+            return Json(new { stuName = name }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -165,7 +165,7 @@ namespace Pro.Web.Controllers
 
             if (!string.IsNullOrEmpty(id))
             {
-                Guid sId =new Guid(id.ToString());
+                Guid sId = new Guid(id.ToString());
                 var m_student = stuReporitory.GetFirstOrDefault(c => c.s_id == sId);
                 if (m_student != null)
                 {

@@ -38,9 +38,9 @@
             <i class="icon-sort sortCreateDate" data-value="s_createDate" data-sort="sort">&nbsp;</i>
         </th>
 
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model[0].s_GradeID)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model[0].s_status)
         </th>
@@ -78,9 +78,9 @@
             <td>
                 @item.s_createDate.ToString().ToDateTime().ToString("yyyy-MM-dd")
             </td>
-            <td>
+            @*<td>
                 @item.GradeValue.GetDisplayName()
-            </td>
+            </td>*@
             <td>
                 <a onclick="UpdateSingleStatus(@item.s_id,@(item.s_status == 0 ? 1 : 0))" class='btn btn-@(item.s_status == 0 ? "danger" : "success") btn-xs' title='@(item.s_status == 0 ? "禁用" : "启用")' @(item.s_status == 0 ? "id='btnSingleEnable'" : "id=btnSingleDisable") data-toggle="tooltip">
                     <i class='@(item.s_status == 0 ? "icon-off" : "icon-ok")'></i>

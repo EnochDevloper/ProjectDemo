@@ -13,7 +13,8 @@ namespace Pro.Model
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public Guid s_id { get; set; }
+        [Display(Name = "编号")]
+        public Guid s_id { get; set; }
 
 		[StringLength(50)]
         [Display(Name ="姓名")]
