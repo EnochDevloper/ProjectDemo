@@ -5,7 +5,7 @@
 @model PagedList<StudentDTO>
 
 @{
-    ViewBag.Title = "AnaularList 列表";
+    ViewBag.Title = "AngularList 列表";
     Layout = "~/Views/Shared/_LayoutNull.cshtml";
 
     var itemList = ViewData["selectList"] as List<SelectListItem>;
@@ -30,7 +30,7 @@
             </div>
             <div class="widget-content bg-white">
                 <form class="form-group" id="formPageSearch">
-                    <input name="url" type="hidden" value="AnaularList" />
+                    <input name="url" type="hidden" value="AngularList" />
                     <input name="pagesize" type="hidden" value="10" />
                     <input name="page" type="hidden" value="1" />
                     <input name="sort" type="hidden" value="s_createDate-desc" />
@@ -343,8 +343,8 @@
                     id = $(obj).parents("td").find("a:first").data("value");
                 }
 
-                hhl.dialog.openUpdate(["/Student/Edit?id=" + id,], "修改学生信息", {
-                    area: ["500px", "550px"],
+                hhl.dialog.openUpdate(["/Angular/EditStudent?id=" + id,], "修改学生信息", {
+                    area: ["520px", "550px"],
                 }, 1);
 
             }

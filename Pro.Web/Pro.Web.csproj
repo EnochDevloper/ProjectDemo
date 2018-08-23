@@ -237,6 +237,7 @@
     <Compile Include="Controllers\AngularController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -559,6 +560,29 @@
     <Content Include="Content\css\jquery.pagination.js" />
     <Content Include="Content\css\pagination.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\My97DatePicker\calendar.js" />
+    <Content Include="Content\My97DatePicker\lang\en.js" />
+    <Content Include="Content\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Content\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="Content\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Content\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Content\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Content\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="Content\My97DatePicker\WdatePicker.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="Content\My97DatePicker\开发包\readme.txt" />
+    <Content Include="Content\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="Content\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="Content\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="Content\myJs\Student.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\proset\layer\extend\layer.ext.js" />
@@ -966,6 +990,7 @@
     <Content Include="Scripts\ztree\js\jquery.ztree.exedit.min.js" />
     <Content Include="Scripts\ztree\js\jquery.ztree.exhide.js" />
     <Content Include="Scripts\ztree\js\jquery.ztree.exhide.min.js" />
+    <Content Include="Test\Index.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -993,6 +1018,8 @@
     <Content Include="Views\Angular\AddStudent.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
     <Content Include="Views\Student\Suggest.cshtml" />
+    <Content Include="Views\Tool\Elevator.cshtml" />
+    <Content Include="Views\Angular\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

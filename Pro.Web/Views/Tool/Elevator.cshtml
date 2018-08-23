@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Elevator";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+
+}
+<style type="text/css">
+    td {
+        cursor: pointer;
+    }
+</style>
+
+<h2>Elevator</h2>
+<section class="panel pane-widget">
+    <div class="panel-body" id="MyApp" ng-app="myApp" ng-controller="myCtrl">
+        <table id="tblLevel" class="table table-bordered table-hover" style="width:35px;">
+            <thead>
+                <tr>
+                    <td colspan="30">当前楼层{{currentLevel}}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td ng-dblclick="removeLevel($event.target)" ng-click="getLevel($event.target)" ng-repeat="num in nums" style="width:35px;">{{num}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="text" ng-model="level" />
+        <span>选择楼层 {{level}}</span>
+        <input type="button" class="btn btn-success btn-sm" value="运行" ng-click="runLevel()" />
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var scope = angular.element($("#MyApp")).scope();
+            //scope.PagedLoad();
+        });
+
+
+        var app = angular.module('myApp', []).controller('myCtrl', ['$scope', '$filter', '$http', function ($scope, $filter, $http) {
+            $scope.level = "";
+            $scope.levelArr = [];
+            $scope.currentLevel = 1;
+
+            var floor = [];
+            for (var i = 1; i <= 30; i++) {
+                floor.push(i);
+            }
+            $scope.nums = floor;
+
+
+
+            //选择楼层
+            $scope.getLevel = function (obj) {
+                var level = $(obj).text();
+
+                if (!($(obj).hasClass("level"))) {
+                    $(obj).addClass("level");
+                    $(obj).css("background-color", "#ff6a00").css("color", "white");
+                    $scope.levelArr.push(level);
+                }
+                $scope.level = $scope.levelArr.join(',');
+            }
+
+            //双击楼层 移除
+            $scope.removeLevel = function (obj) {
+                var level = $(obj).text();
+                if ($(obj).hasClass("level")) {
+                    $(obj).removeClass("level");
+                    $(obj).css("background-color", "white").css("color", "#797979");
+                    var index = $scope.levelArr.indexOf(level);
+                    $scope.levelArr.splice(index, 1);
+                }
+                $scope.level = $scope.levelArr.join(',');
+            }
+
+            //运行
+            $scope.runLevel = function () {
+                var timer = setInterval(function () {
+                    $scope.currentLevel = $scope.currentLevel + 1;
+                    $scope.$apply();
+                    for (var i = 0; i < $scope.levelArr.length; i++) {
+                        var selLevel = $scope.levelArr[i];
+                        if ($scope.currentLevel == selLevel) {
+                            alert("楼层到了");
+                            var index = $scope.levelArr.indexOf(selLevel);
+                            $scope.levelArr.splice(index, 1);
+                            $("td").each(function (i) {
+                                if ($(this).text() == selLevel) {
+                                    $(this).removeClass("level");
+                                }
+                            });
+                            clearInterval(timer);
+                            break;
+                        }
+                    }
+                }, 1000);
+
+               
+
+
+            }
+
+            $scope.fun2 = function (e) {
+                return e % 2 == 0;
+            }
+            $scope.fun3 = function (e) {
+                return e % 3 == 0;
+            }
+
+        }]);
+    </script>
+}

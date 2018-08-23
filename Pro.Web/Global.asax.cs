@@ -13,7 +13,7 @@ using Pro.Model;
 using System.Web.Compilation;
 using Pro.Dal.Stu;
 using Pro.Dal.Base;
-using Autofac.Core.Activators.Reflection;
+using Autofac.Core;
 using System.Data.Entity;
 
 namespace Pro.Web
