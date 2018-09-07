@@ -21,7 +21,7 @@ namespace Pro.Model
         public string s_name { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "账号")]
+        [Display(Name = "登陆名")]
         public string s_loginName { get; set; }
 
         [StringLength(50)]
@@ -29,11 +29,11 @@ namespace Pro.Model
         public string s_passWord { get; set; }
 
         [StringLength(200)]
-        [Display(Name = "地址")]
+        [Display(Name = "姓名地址")]
         public string s_address { get; set; }
 
         [Display(Name = "性别")]
-        public Nullable<byte> s_sex { get; set; }
+        public byte? s_sex { get; set; }
 
         [Display(Name = "年龄")]
         public int? s_age { get; set; }
@@ -43,7 +43,7 @@ namespace Pro.Model
         public string s_phone { get; set; }
 
         [Display(Name = "状态")]
-        public Nullable<byte> s_status { get; set; }
+        public byte? s_status { get; set; }
 
         [Display(Name = "备注")]
         public string s_remark { get; set; }
@@ -53,8 +53,6 @@ namespace Pro.Model
 
         [Display(Name = "年级")]
         public Guid? s_Grade_ID { get; set; }
-        [Display(Name = "年级")]
-        public Nullable<Guid> s_GradeID { get; set; }
 
     }
 }

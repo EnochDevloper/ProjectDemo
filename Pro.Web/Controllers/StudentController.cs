@@ -15,6 +15,7 @@ using Pro.Dal.Base;
 using Pro.Model.model;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using Pro.Model.dto;
 
 namespace Pro.Web.Controllers
 {
@@ -96,20 +97,20 @@ namespace Pro.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid? id)
         {
             #region 下拉框
 
             Enum gender = Gender.Male;
             ViewData["selectList"] = gender.GetSelectList(false);
 
-            Enum grade = GradeName.FirstGrade;
-            ViewData["Grade"] = grade.GetSelectList(false);
+            //Enum grade = GradeName.FirstGrade;
+            //ViewData["Grade"] = grade.GetSelectList(false);
             #endregion
 
             EFDbContext _context = new EFDbContext();
             Student stu = new Student();
-            if (id != 0)
+            if (id != null && id != Guid.Empty)
             {
                 //stu = stuService.GetModel(id);
                 stu = baseService.GetById(id);
@@ -263,7 +264,7 @@ namespace Pro.Web.Controllers
             ajax.Message = "系统异常";
             if (!string.IsNullOrEmpty(stu_id))
             {
-                Guid Id =new Guid(stu_id.ToString());
+                Guid Id = new Guid(stu_id.ToString());
                 Expression<Func<Student, bool>> parm = c => c.s_id == Id;
                 int result = baseService.DelBy(parm);
                 if (result > 0)
@@ -305,7 +306,7 @@ namespace Pro.Web.Controllers
             foreach (var item in gradeList)
             {
                 TreeVO entity = new TreeVO();
-                entity.id = item.GradeID;
+                entity.id = item.ID;
                 entity.pid = Guid.Empty;
                 entity.name = item.GradeName;
                 tree.Add(entity);
@@ -314,12 +315,12 @@ namespace Pro.Web.Controllers
             foreach (var item in stuList)
             {
                 TreeVO entity = new TreeVO();
-                
-                    entity.id = item.s_id;
-                    entity.pid = item.s_GradeID;
-                    entity.name = item.s_name;
-                    tree.Add(entity);
-                
+
+                entity.id = item.s_id;
+                entity.pid = item.s_Grade_ID;
+                entity.name = item.s_name;
+                tree.Add(entity);
+
             }
             //var tree = (from c in ObjEntity.Grade
             //            join d in ObjEntity.Student on c.GradeID equals d.s_GradeID
@@ -355,6 +356,8 @@ namespace Pro.Web.Controllers
         #endregion
 
 
+
+
         #region Suggest页面
         /// <summary>
         /// suggest搜索页面
@@ -365,8 +368,6 @@ namespace Pro.Web.Controllers
         {
             return View();
         }
-        #endregion
-
 
         #region suggest获取学生信息
         /// <summary>
@@ -393,5 +394,122 @@ namespace Pro.Web.Controllers
         }
         #endregion
 
+        #endregion
+
+
+        #region bootstrap-suggest
+        // 页面 Index.html
+        /// <summary>
+        /// 2018-09-05
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetStudent()
+        {
+            var stuList = stuReporitory.GetRepositoy().ToList();
+            return Json(new { value = stuList }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region bootstrap-select
+        public ActionResult BootSelect()
+        {
+            return View();
+        }
+
+        #region 获取所有公司信息
+        /// <summary>
+        /// 获取所有公司名称
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetCompanyInfo()
+        {
+            var dataList = comService.GetListBy(null);
+            return Json(dataList);
+        }
+        #endregion
+
+        #endregion
+
+
+        #region bootstrap-table
+
+        public ActionResult BootTable()
+        {
+            #region 下拉框
+
+            Enum status = SysStatus.Enable;
+            ViewData["selectList"] = status.GetSelectList();
+
+            #endregion
+
+            return View();
+        }
+
+        #region 分页 异步查询
+        [HttpPost]
+        public JsonResult GetStudentByCondition(int page, int pageSize, string sortName, List<PropModel> searchs, string search)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+            ajax.IsSuccess = false;
+            ajax.Message = "查询失败,系统异常";
+            try
+            {
+                int count = 0;
+                //lamada表达式 条件数组
+                List<Expression<Func<StudentDTO, bool>>> parmList = new List<Expression<Func<StudentDTO, bool>>>();
+
+
+                if (searchs.Count() > 0)
+                {
+                    foreach (PropModel item in searchs)
+                    {
+                        if (!string.IsNullOrEmpty(item.value) && item.value != "," && item.value != "-1")
+                        {
+                            ExpressionTools.GetEqualPars(item.property, parmList, item.value, item.method);
+                        }
+                    }
+                }
+
+                //判断是否为空
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    parmList.Add(c => c.s_name.Contains(search) || c.s_loginName.Contains(search) || c.s_address.Contains(search));
+                }
+
+                var list = stuService.GetConditionStu(page, pageSize, sortName, parmList, ref count);
+                if (count > 0)
+                {
+                    var DataList = new PagedList<StudentDTO>(list, page, pageSize, count);
+
+                    ajax.data = DataList;
+                    ajax.total = count;         //数据总条数
+                    ajax.PageIndex = page;      //当前页
+                    ajax.PageSize = pageSize;   //每页显示条数
+
+                    ajax.IsSuccess = true;
+                    ajax.Message = "查询成功";
+                }
+                else
+                {
+                    ajax.data = list;
+                    ajax.total = count;         //数据总条数
+                }
+            }
+            catch (Exception e)
+            {
+                ajax.Message = e.Message;
+            }
+
+            //return ajax;
+            return Json(new
+            {
+                rows = ajax.data,
+                total = ajax.total        //数据总条数
+            });
+        }
+
+        #endregion
+
+        #endregion
     }
 }

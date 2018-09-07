@@ -146,7 +146,7 @@ namespace Pro.Web.Controllers
             Enum sex = Gender.Male;
             ViewData["sexLiat"] = sex.GetSelectList(false);
 
-            List<SelectListItem> list = gradeReporitory.GetAllList().Select(c => new SelectListItem { Text = c.GradeName, Value = c.GradeID.ToString() }).ToList();
+            List<SelectListItem> list = gradeReporitory.GetAllList().Select(c => new SelectListItem { Text = c.GradeName, Value = c.ID.ToString() }).ToList();
             ViewData["gradeList"] = list;
 
 

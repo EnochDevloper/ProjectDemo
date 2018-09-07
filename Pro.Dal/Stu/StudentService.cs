@@ -66,7 +66,7 @@ namespace Pro.Dal.Stu
         public List<StudentDTO> GetConditionStu(int page, int pagesize, string sortName, List<Expression<Func<StudentDTO, bool>>> parmList, ref int count)
         {
             var query = (from c in ObjEntity.Student
-                         join d in ObjEntity.Grade on c.s_GradeID equals d.GradeID
+                         join d in ObjEntity.Grade on c.s_Grade_ID equals d.ID
                          select new StudentDTO()
                          {
                              s_id = c.s_id,
@@ -94,9 +94,15 @@ namespace Pro.Dal.Stu
             }
             //返回总条数
             count = query.Count();
-
-            query = SortTools.SortingAndPaging<StudentDTO>(query, sortName, page, pagesize);
-            return query.ToList();
+            if (count > 0)
+            {
+                query = SortTools.SortingAndPaging<StudentDTO>(query, sortName, page, pagesize);
+                return query.ToList();
+            }
+            else
+            {
+                return new List<StudentDTO> { };
+            }
         }
 
 
