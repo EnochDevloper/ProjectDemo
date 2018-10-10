@@ -510,6 +510,45 @@ namespace Pro.Web.Controllers
 
         #endregion
 
+
+
+
+        #endregion
+
+        #region 公司表格
+
+
+        public ActionResult CompanyTable()
+        {
+            Enum status = SysStatus.Enable;
+            ViewData["selectList"] = status.GetSelectList();
+            return View();
+        }
+
+        public JsonResult GetCompanyInfoByID(string parentId)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+            ajax.Message = "加载异常";
+            try
+            {
+                EFDbContext ObjEntity = new EFDbContext();
+                Guid pId = new Guid(parentId);
+                var companyList = ObjEntity.Company.Where(c => c.PId == pId).ToList();
+                ajax.data = companyList;
+                ajax.total = companyList.Count;
+                ajax.Message = "数据加载成功";
+            }
+            catch (Exception e)
+            {
+                ajax.Message = e.Message;
+            }
+            return Json(new
+            {
+                rows = ajax.data,
+                total = ajax.total        //数据总条数
+            });
+        }
+
         #endregion
     }
 }

@@ -1,9 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "BootTable";
-    //Layout = null;
+    ViewBag.Title = "CompanyTable";
 }
 
+
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap-Table</title>
+</head>
 
 <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
 
@@ -55,11 +59,7 @@
 
             //1.初始化Table
             var oTable = new TableInit();
-            oTable.Init();
-
-            //2.初始化Button的点击事件
-            var oButtonInit = new ButtonInit();
-            oButtonInit.Init();
+            oTable.InitTable();
 
 
         });
@@ -69,6 +69,55 @@
             var oTableInit = new Object();
             //初始化Table
             oTableInit.Init = function () {
+                
+                $('#tb_user').bootstrapTable({
+                    url: '/Student/GetCompanyInfoByID',         //请求后台的URL（*）
+                    method: 'post',                     //请求方式（*）
+                    //toolbar: '#toolbar',                //工具按钮用哪个容器
+                    //striped: true,                      //是否显示行间隔色
+                    //cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    //sortable: false,                     //是否启用排序
+                    queryParams: { parentId: "00000000-0000-0000-0000-000000000000" },//传递参数（*）
+                    //search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    //strictSearch: true,
+                    showColumns: true,                  //是否显示所有的列
+                    //showRefresh: true,                  //是否显示刷新按钮
+                    //minimumCountColumns: 2,             //最少允许的列数
+                    clickToSelect: true,                //是否启用点击选中行
+                    height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    //uniqueId: "CompanyID",                   //每一行的唯一标识，一般为主键列
+                    //idField: "CompanyID",                      //主键列
+                    //showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+                    //cardView: false,                    //是否显示详细视图
+                    //detailView: false,                  //是否显示父子表
+                    //showPaginationSwitch: true,         //是否显示切换分页按钮
+
+                    columns: [{
+                        checkbox: true
+                    }, {
+                        field: 'CompanyName',
+                        title: '公司名称'
+                    }, {
+                        field: 'CreateDate',
+                        title: '添加日期',
+                        sortable: true
+                    }, {
+                        field: 'IsDelete',
+                        title: '状态',
+                        formatter: function (value, rows, index) {
+                            debugger
+                            if (value == "1") {
+                                return "<span style='color:green;'>启用</span>";
+                            } else {
+                                return "<span style='color:red;'>禁用</span>";
+                            }
+                        }
+                    },]
+                });
+            };
+
+            //初始化Table
+            oTableInit.InitTable = function () {
                 $('#tb_user').bootstrapTable({
                     url: '/Student/GetStudentByCondition',         //请求后台的URL（*）
                     method: 'post',                     //请求方式（*）
@@ -165,76 +214,10 @@
             };
 
 
-            oTableInit.InitSubTable = function (index, row, $detail) {
-            }
 
             return oTableInit;
         };
 
-
-
-        //按钮功能
-        var ButtonInit = function () {
-            var oInit = new Object();
-            var postdata = {};
-
-            oInit.Init = function () {
-                //初始化页面上面的按钮事件
-
-                //点击查询/搜索
-                $("#btn_query").on("click", function () {
-                    Searchs();
-                });
-
-                //清空条件
-                $("#btn_clear").click(function () {
-                    $("#txt_uname").val("");
-                    $("#Status").val("-1");
-                    Searchs();
-                });
-
-
-                //点击编辑
-                $("#btn_edit").on("click", function () {
-                    //alert("编辑事件");
-                    var chk = $("input[name='btSelectItem']:checked");
-                    var chkVal = [];
-                    chk.each(function (index) {
-                        chkVal.push($(this).parents("tr").data("uniqueid"));
-                    });
-                    debugger
-                    if (chkVal.length > 1) {
-                        alert("不能同时选择多个用户进行编辑");
-                        return
-                    } else if (chkVal.length == 1) {
-                        var selVal = chkVal.join(',');
-                        window.open('/Student/Edit/' + selVal);
-
-                    } else if (chkVal.length == 0) {
-                        alert("请选择用户 进行编辑");
-                        return
-                    }
-                });
-            };
-
-            return oInit;
-        };
-
-        //搜索条件
-        var GetSearchs = function () {
-            var searchs = [];
-            searchs.push({ property: "s_name/s_loginName", value: $("#txt_uname").val(), method: "Contains" })
-            searchs.push({ property: "s_status", value: $("#Status").val(), method: "==" })
-            return searchs;
-        };
-
-
-        //搜索功能方法
-        var Searchs = function () {
-            var oTable1 = new TableInit();
-            var param = oTable1.queryParams;
-            // 刷新表格
-            $('#tb_user').bootstrapTable('refresh', param);
-        }
     </script>
 }
+

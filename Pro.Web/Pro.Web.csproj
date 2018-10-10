@@ -1158,6 +1158,7 @@
     <Content Include="Views\Angular\EditStudent.cshtml" />
     <Content Include="Views\Student\BootSelect.cshtml" />
     <Content Include="Views\Student\BootTable.cshtml" />
+    <Content Include="Views\Student\CompanyTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
