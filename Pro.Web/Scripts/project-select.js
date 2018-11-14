@@ -87,7 +87,6 @@ function mutileControl(controls, url, value, text) {
             }
             if (!options.url) return;
             $.post(options.url, options.param, function (data) {
-                debugger
                 init(target, data);
             });
         }

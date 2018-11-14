@@ -19,7 +19,7 @@
         <div class="form-group pull-left col-sm-3">
             <h3>下拉选择框</h3>
             <p>普通的下拉选择框。</p>
-            <select id="select1" class="selectpicker">
+            <select id="select1" class="selectpicker" >
                 @*<option value="1">广东省</option>
                     <option value="2">广西省</option>
                     <option value="3">福建省</option>
@@ -133,12 +133,12 @@
 
             mutileControl(["select1", "select2", "select3"], '/Student/GetCompanyInfo', 'CompanyID', 'CompanyName');
 
-            $('#select1').bootstrapSelect({
-                url: '/Student/GetCompanyInfo',
-                data: [],
-                valueField: 'CompanyID',
-                textField: 'CompanyName',
-            });
+            //$('#select1').bootstrapSelect({
+            //    url: '/Student/GetCompanyInfo',
+            //    data: [],
+            //    valueField: 'CompanyID',
+            //    textField: 'CompanyName',
+            //});
 
 
             $("#button1").on("click", function () {

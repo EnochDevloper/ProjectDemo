@@ -268,96 +268,101 @@
         locale: undefined,
         height: undefined,
         undefinedText: '-',
-        sortName: undefined,
-        sortOrder: 'asc',
-        sortStable: false,
-        sortClass: undefined,
-        rememberOrder: false,
-        striped: false,
-        columns: [
+        sortName: undefined,            //定义哪一列的值会被排序，写data-field的自定义名，没定义默认都不排列，同下面的sortOrder结合使用，没写的话列默认递增
+        sortOrder: 'asc',               //同上面的结合使用，默认递增（asc），也可设为递减（desc）
+        sortStable: false,              //（别看错了，是sortStable，sortable在下面）默认false，设为true，则和sort部分一样，区别是：在排序过程中，如果存在相等的元素，则原来的顺序不会改变。
+        sortClass: undefined,           //
+        rememberOrder: false,           //
+        striped: false,         //
+        columns: [          //
             []
         ],
-        data: [],
-        totalField: 'total',
-        dataField: 'rows',
-        method: 'get',
-        url: undefined,
-        ajax: undefined,
-        cache: true,
-        contentType: 'application/json',
-        dataType: 'json',
-        ajaxOptions: {},
-        queryParams(params) {
+        data: [],       //
+        totalField: 'total',        //
+        dataField: 'rows',      //
+        method: 'get',      //
+        url: undefined,     //
+        ajax: undefined,        //
+        cache: true,            //
+        contentType: 'application/json',        //
+        dataType: 'json',           //
+        ajaxOptions: {},        //
+        queryParams(params) {       //
             return params
         },
         queryParamsType: 'limit', // 'limit', undefined
         responseHandler(res) {
             return res
         },
-        pagination: false,
-        onlyInfoPagination: false,
-        paginationLoop: true,
+        pagination: false,      //
+        onlyInfoPagination: false,      //
+        paginationLoop: true,       //
         sidePagination: 'client', // client or server
         totalRows: 0, // server side need to set
-        pageNumber: 1,
-        pageSize: 10,
-        pageList: [10, 25, 50, 100],
+        pageNumber: 1,      //
+        pageSize: 10,       //
+        pageList: [10, 25, 50, 100],        //
         paginationHAlign: 'right', // right, left
         paginationVAlign: 'bottom', // bottom, top, both
-        paginationDetailHAlign: 'left', // right, left
-        paginationPreText: '&lsaquo;',
-        paginationNextText: '&rsaquo;',
-        search: false,
-        searchOnEnterKey: false,
-        strictSearch: false,
-        searchAlign: 'right',
-        selectItemName: 'btSelectItem',
-        showHeader: true,
-        showFooter: false,
-        showColumns: false,
-        showPaginationSwitch: false,
-        showRefresh: false,
-        showToggle: false,
-        showFullscreen: false,
-        smartDisplay: true,
-        escape: false,
-        minimumCountColumns: 1,
-        idField: undefined,
-        uniqueId: undefined,
-        cardView: false,
-        detailView: false,
+        paginationDetailHAlign: 'left', // right, left      //如果解译的话太长，举个例子，paginationDetail就是“显示第 1 到第 8 条记录，总共 15 条记录 每页显示 8 条记录”，默认left（最左），可选right
+        paginationPreText: '&lsaquo;',              //指定分页条中上一页按钮的图标或文字
+        paginationNextText: '&rsaquo;',             //指定分页条中下一页按钮的图标或文字
+        search: false,                  //默认false不显示表格右上方搜索框 ，可设为true，在搜索框内只要输入内容即开始搜索
+        searchOnEnterKey: false,                //默认false不启用，设为true启用，比功能是与上面相比，在搜索框内输入内容并且按下回车键才开始搜索
+        strictSearch: false,                //设为true，开启精确搜索
+        searchAlign: 'right',               //搜索框的位置，默认right（最右），可选left
+        selectItemName: 'btSelectItem',         //radio（单选按钮）或checkbox（复选框）的字段名
+        showHeader: true,           //是否显示列头
+        showFooter: false,          //是否显示列脚
+        showColumns: false,         //是否显示 内容列下拉框
+        showPaginationSwitch: false,                //是否显示 数据条数选择框     
+        showRefresh: false,                          //默认为false隐藏刷新按钮，设为true显示
+        showToggle: false,                          //默认为false隐藏视图切换按钮，设为true显示
+        showFullscreen: false,          //是否显示全屏
+        smartDisplay: true,         //设置为 true可以在分页和卡片视图快速切换
+        escape: false,          //转义HTML字符串，替换 &, <, >, ", `, 和 ' 字符.
+        minimumCountColumns: 1,     //当列数小于此值时，将隐藏内容列下拉框。
+        idField: undefined,         //指定主键列
+        uniqueId: undefined,            //为每一行指定唯一的标识符
+        cardView: false,            //设置为 true将显示card视图，适用于移动设备。否则为table试图，适用于pc
+        detailView: false,          //设置为 true 可以显示详细页面模式。
         detailFormatter(index, row) {
             return ''
         },
         detailFilter(index, row) {
             return true
         },
-        trimOnSearch: true,
-        clickToSelect: false,
-        singleSelect: false,
-        toolbar: undefined,
-        toolbarAlign: 'left',
-        buttonsToolbar: undefined,
-        buttonsAlign: 'right',
-        checkboxHeader: true,
-        sortable: true,
-        silentSort: true,
-        maintainSelected: false,
-        searchTimeOut: 500,
-        searchText: '',
-        iconSize: undefined,
-        buttonsClass: bootstrap.classes.buttons,
+        trimOnSearch: true,             //设置为 true 将允许空字符搜索
+        clickToSelect: false,           //设置true 将在点击行时，自动选择rediobox 和 checkbox
+        singleSelect: false,            //设置True 将禁止多选
+        toolbar: undefined,             //一个jQuery 选择器，指明自定义的toolbar 例如: #toolbar, .toolbar.
+        toolbarAlign: 'left',           //自定义工具栏的位置，默认left（最左），可选right
+        buttonsToolbar: undefined,          //一个指示按钮工具栏的jQuery选择器，例如：#buttons-toolbar, .buttons-toolbar或DOM节点。
+        buttonsAlign: 'right',              //工具栏按钮的位置，默认right（最右），可选left
+        checkboxHeader: true,           //设置false 将在列头隐藏check-all checkbox .
+        sortable: true,             //设置为false 将禁止所有列的排序
+        silentSort: true,                   //设置为 false 将在点击分页按钮时，自动记住排序项。仅在 sidePagination设置为 server时生效.
+        maintainSelected: false,            //设为true则保持被选的那一行的状态
+        searchTimeOut: 500,         //设置搜索超时时间
+        searchText: '',             //初始化搜索文字
+        iconSize: undefined,            //定义图标大小 undefined => btn  xs => btn - xssm => btn - smlg => btn - lg
+        buttonsClass: bootstrap.classes.buttons,        //按钮的类，默认为default。
         iconsPrefix: bootstrap.iconsPrefix, // glyphicon or fa(font-awesome)
-        icons: bootstrap.icons,
+        icons: bootstrap.icons,     //定义在工具栏、分页、详细视图中使用的图标
         customSearch: $.noop,
-        customSort: $.noop,
+        //执行自定义搜索功能而不是内置搜索功能，需要一个参数：text: 搜索文本
+        // function customSearch(text) {
+        //Search logic here.
+        //You must use `this.data` array in order to filter the data. NO use `this.options.data`.
+        //}
+        customSort: $.noop,             //
         ignoreClickToSelectOn(element) {
             return ['A', 'BUTTON'].includes(element.tagName)
         },
         rowStyle(row, index) {
             return {}
         },
-        rowAttributes(row, index) {
+        rowAttributes(row, index) {         //改变某行的属性，需要两个参数：  - row：此行的数据- index：此行的索引 支持所有自定义的属性。
             return {}
         },
         footerStyle(row, index) {
@@ -489,34 +494,34 @@
     $.extend(DEFAULTS, LOCALES['en-US'])
 
     const COLUMN_DEFAULTS = {
-        radio: false,
-        checkbox: false,
-        checkboxEnabled: true,
-        field: undefined,
-        title: undefined,
-        titleTooltip: undefined,
-        'class': undefined,
-        align: undefined, // left, right, center
-        halign: undefined, // left, right, center
-        falign: undefined, // left, right, center
-        valign: undefined, // top, middle, bottom
-        width: undefined,
-        sortable: false,
-        order: 'asc', // asc, desc
-        visible: true,
-        switchable: true,
-        clickToSelect: true,
-        formatter: undefined,
-        footerFormatter: undefined,
-        events: undefined,
-        sorter: undefined,
-        sortName: undefined,
-        cellStyle: undefined,
-        searchable: true,
-        searchFormatter: true,
-        cardVisible: true,
-        escape: false,
-        showSelectTitle: false
+        radio: false,                       //默认false不显示radio（单选按钮），设为true则显示，radio宽度是固定的
+        checkbox: false,                    //默认false不显示checkbox（复选框），设为true则显示，checkbox的每列宽度已固定
+        checkboxEnabled: true,              //
+        field: undefined,                   //是每列的字段名，不是表头所显示的名字，通过这个字段名可以给其赋值，相当于key，表内唯一
+        title: undefined,                   //这个是表头所显示的名字，不唯一，如果你喜欢，可以把所有表头都设为相同的名字
+        titleTooltip: undefined,            //当悬浮在某控件上，出现提示
+        'class': undefined,                 //就是class
+        align: undefined, // left, right, center        //设置该列数据如何对齐，’left’, ‘right’, ‘center’
+        halign: undefined, // left, right, center       //table header对齐方式， ‘left’, ‘right’, ‘center’
+        falign: undefined, // left, right, center       //table footer对齐方式， ‘left’, ‘right’, ‘center’
+        valign: undefined, // top, middle, bottom       //单元格（cell）对齐方式. ‘top’, ‘middle’, ‘bottom’
+        width: undefined,               //列的宽度，可以使用像素或者百分比，不带单位则默认为px
+        sortable: false,                //该列是否排序（表头显示双箭头）
+        order: 'asc', // asc, desc      //该列默认的排序方式， ‘asc’ or ‘desc’.
+        visible: true,                  //该列是否可见
+        switchable: true,               //列切换是否可见
+        clickToSelect: true,            //是否选中checkbox或者radio，当该列被选择时
+        formatter: undefined,           //格式化单元格内容，function(value, row, index), value：该cell本来的值，row：该行数据，index：该行序号（从0开始）
+        footerFormatter: undefined,     //格式化footer内容，function(rows)，rows：所有行数据
+        events: undefined,              //The cell 的事件监听，当你使用formatter function的时候,有三个参数: event: the jQuery event. value: 该cell的值 row: 该行的数据 index: 该行的序号
+        sorter: undefined,              //自定义字段排序函数，function(a, b)
+        sortName: undefined,            //当列中有html等标签时，只排序实际内容（忽略标签和样式），例如字段为：”abc“，则sortName=abc
+        cellStyle: undefined,           //单元格样式，支持css和classes，function(value, row, index) value: 该cell的值 row: 该行的数据 index: 该行的序号
+        searchable: true,               //搜索时是否搜索此列
+        searchFormatter: true,          //搜索是否使用格式化后的数据（即显示在页面上的数据）
+        cardVisible: true,              //
+        escape: false,                  //跳过插入HTML中的字符串，替换掉特殊字符（后面符号没有逗号）：&，<，>，"，`，'
+        showSelectTitle: false          //用“单选框 radio”或“单选 singleselect”“复选框 checkbox”选项显示栏标题
     }
 
     const EVENTS = {
@@ -2891,7 +2896,7 @@
 
         togglePagination() {
 
-            
+
             this.options.pagination = !this.options.pagination
             this.options.pageSize = this.options.totalRows
             this.$toolbar.find('.page-size').text(this.options.pageSize)
