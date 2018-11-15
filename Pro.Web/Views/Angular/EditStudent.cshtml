@@ -86,10 +86,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.s_GradeID, new { @class = "control-label col-sm-2" })
+                            @Html.LabelFor(model => model.s_Grade_ID, new { @class = "control-label col-sm-2" })
                             <div class="col-sm-9">
-                                @Html.DropDownListFor(model => model.s_GradeID, ViewData["gradeList"] as List<SelectListItem>, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_GradeID) })
-                                @Html.ValidationMessageFor(model => model.s_GradeID)
+                                @Html.DropDownListFor(model => model.s_Grade_ID, ViewData["gradeList"] as List<SelectListItem>, new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_Grade_ID) })
+                                @Html.ValidationMessageFor(model => model.s_Grade_ID)
                             </div>
                         </div>
                     </div>
