@@ -53,6 +53,7 @@
     <Compile Include="Entities\Constellation.cs" />
     <Compile Include="EFDbContext.cs" />
     <Compile Include="Entities\Grade.cs" />
+    <Compile Include="Entities\PM_ProjectInfo.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="model\Grade_partial.cs" />
     <Compile Include="model\Student_partial.cs" />
