@@ -101,8 +101,6 @@
                     detailView: true,                   //展开详情
                     detailFormatter(index, row) {
                         var d = '';
-                        //d += "姓名：" + row.s_name;
-                        //d += "<br /><br />登录名：" + row.s_loginName
                         d += "<p>姓名：" + row.s_name + "</p>";
                         d += "<p>登录名：" + row.s_loginName + "</p>";
                         d += "<p>地址：" + row.s_address + "</p>";
@@ -207,6 +205,16 @@
                     $("#txt_uname").val("");
                     $("#Status").val("-1");
                     Searchs();
+                });
+
+                //点击添加
+                $("#btn_add").on("click", function () {
+                    alert("添加功能测试");
+                });
+
+                //点击删除
+                $("#btn_delete").on("click", function () {
+                    alert("删除功能测试");
                 });
 
 
