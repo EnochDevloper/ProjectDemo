@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "BootSelect";
+    //Layout = null;
+}
+
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+
+<script src="~/Scripts/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="~/Scripts/bootstrap-select/i18n/defaults-zh_CN.min.js"></script>
+
+<script src="~/Scripts/project-select.js"></script>
+<section class="panel">
+    <div class="panel-body">
+        <h2>Bootstrap-select</h2>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>普通的下拉选择框。</p>
+            <select id="select1" class="selectpicker" >
+                @*<option value="1">广东省</option>
+                    <option value="2">广西省</option>
+                    <option value="3">福建省</option>
+                    <option value="4">湖南省</option>
+                    <option value="5">山东省</option>*@
+            </select>
+            <button id="button1" class="btn btn-info btn-sm">获取值</button>
+        </div>
+
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>可以多选的下拉选择框。</p>
+            <select id="select2" class="selectpicker" multiple>
+                @*<option value="1">广东省</option>
+                    <option value="2">广西省</option>
+                    <option value="3">福建省</option>
+                    <option value="4">湖南省</option>
+                    <option value="5">山东省</option>*@
+            </select>
+        </div>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>带有搜索功能的 多选的下拉选择框。</p>
+            <select id="select3" class="selectpicker" multiple data-live-search="true">
+                @*<option value="1">广东省</option>
+                    <option value="2">广西省</option>
+                    <option value="3">福建省</option>
+                    <option value="4">湖南省</option>
+                    <option value="5">山东省</option>*@
+            </select>
+        </div>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>选项分组 的下拉选择框。</p>
+            <select class="form-control selectpicker" data-live-search="true" multiple>
+                <optgroup label="广东省">
+                    <option value="1">广州市</option>
+                    <option value="2">深圳市</option>
+                    <option value="3">珠海市</option>
+                </optgroup>
+                <optgroup label="广西">
+                    <option value="1">南宁市</option>
+                    <option value="2">柳州</option>
+                    <option value="3">桂林市</option>
+                </optgroup>
+                <optgroup label="山东">
+                    <option value="1">烟台</option>
+                    <option value="2">青岛</option>
+                    <option value="3">济南</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>设置最多选中项为2个 的下拉选择框。</p>
+            <select class="selectpicker" multiple data-live-search="true" data-max-options="2">
+                <option value="1">广东省</option>
+                <option value="2">广西省</option>
+                <option value="3">福建省</option>
+                <option value="4">湖南省</option>
+                <option value="5">山东省</option>
+            </select>
+        </div>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>缩略模式，比如当选中值大于3个的时候只显示选中项的个数，这个属性只对多选生效</p>
+            <select class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3">
+                <option value="1">广东省</option>
+                <option value="2">广西省</option>
+                <option value="3">福建省</option>
+                <option value="4">湖南省</option>
+                <option value="5">山东省</option>
+            </select>
+        </div>
+
+        <div class="form-group pull-left col-sm-3">
+            <h3>下拉选择框</h3>
+            <p>显示带颜色的标签</p>
+            <select class="form-control selectpicker" title="请选择省份" multiple>
+                <option data-content="<span class='label label-success'>广东省</span>">广东省</option>
+                <option data-content="<span class='label label-info'>广西省</span>">广西省</option>
+                <option data-content="<span class='label label-warning'>福建省</span>">福建省</option>
+                <option data-content="<span class='label label-danger'>山东省</span>">山东省</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            //$.post("/Student/GetCompanyInfo", {}, function (data) {
+            //    if (data) {
+            //        debugger
+            //        console.log(data);
+            //        var info = [];
+            //        for (var i = 0; i < data.length; i++) {
+            //            var name = data[i].CompanyName;
+            //            info.push(name);
+            //        }
+            //        $('#select1').selectpicker('val', info).trigger("change");
+            //    }
+            //});
+
+            mutileControl(["select1", "select2", "select3"], '/Student/GetCompanyInfo', 'CompanyID', 'CompanyName');
+
+            //$('#select1').bootstrapSelect({
+            //    url: '/Student/GetCompanyInfo',
+            //    data: [],
+            //    valueField: 'CompanyID',
+            //    textField: 'CompanyName',
+            //});
+
+
+            $("#button1").on("click", function () {
+                debugger
+                //alert("测试啊");
+                var value1 = $('#select1').val();
+                var value2 = $('#select2').val();
+                var value3 = $('#select3').val();
+
+                var title1 = $("button[data-id='select1']").attr("title");
+                var title2 = $("button[data-id='select2']").attr("title");
+                var title3 = $("button[data-id='select3']").attr("title");
+
+            });
+        });
+    </script>
+}

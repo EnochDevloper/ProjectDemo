@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>测试页面</title>
+    <!--千万要导入js文件-->
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div class="panel">
+        文本框A:<input type="text" id="txta">
+        <input type="button" id="btnCrate" value="按钮A" />
+        文本框B:<input type="text" id="txtb" />
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+
+        $("#btnCrate").click(function () {
+            var country = ["中国", "英国", "美国", "挪威", "日本"]
+            var text = $("#txta").val()
+            var Arr = [];
+            for (var i = 0; i < 3; i++) {
+                var leng = country.length       //数组长度
+                var index = Math.round(Math.random() * (leng - 1));
+                Arr.push(country[index]);      //组成新的数组
+                country.splice(index, 1);     //移除选中的国家 避免重复
+            }
+            var newArr = Arr.join("。");     //用句号将数组链接起来
+            $("#txtb").val(text + "。" + newArr)
+        });
+    });
+</script>
