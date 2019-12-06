@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Copty";
+    Layout = "~/Views/Shared/_LayoutNull.cshtml";
+}
+
+<h2>Copty</h2>
+<section class="panel pane-widget">
+    <div class="panel-body center-align">
+        <div class="form-group">
+            <button id="btnCopy" class="btn btn-info btn-sm">复制</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-info btn-sm" onclick="Copy()">复制并粘贴</button>
+        </div>
+        <div class="form-group">
+            <label>复制内容：</label>
+            <input type="text" id="txtCopyText" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>粘贴内容：</label>
+            <input type="text" id="txtPasteText" class="form-control" />
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function Copy() {
+        var clipBoardContent = this.location.href;
+        window.clipboardData.setData("Text", clipBoardContent);
+        alert("复制成功!");
+    }
+
+    $(function () {
+        $("#btnCopy").on("click", function () {
+            $("#txtCopyText").clone();
+        });
+    });
+</script>
+
