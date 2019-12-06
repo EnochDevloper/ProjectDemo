@@ -29,7 +29,7 @@ namespace Pro.Model
         public string s_passWord { get; set; }
 
         [StringLength(200)]
-        [Display(Name = "地址")]
+        [Display(Name = "姓名地址")]
         public string s_address { get; set; }
 
         [Display(Name = "性别")]
