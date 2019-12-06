@@ -1,20 +1,18 @@
 ﻿@using Pro.Extension
 @using Pro.Common
 @using Pro.Model
-@model PagedList<Student>
-
+@using Pro.Model.dto
+@model PagedList<StudentDTO>
 @{
-    ViewBag.Title = "AnaularList 列表";
+    ViewBag.Title = "AngularList 列表";
     Layout = "~/Views/Shared/_LayoutNull.cshtml";
 
     var itemList = ViewData["selectList"] as List<SelectListItem>;
 }
 
-
 <section class="panel panel-widget">
     <div class="panel-body" ng-app="MyApp" ng-controller="MyCtrl" id="MyApp">
         <!--背景颜色条-->
-
         <div class="widget box">
             <div class="widget-header">
                 <h4 class="pull-left"><i class="icon-reorder"></i>搜索条件</h4>
@@ -29,7 +27,7 @@
             </div>
             <div class="widget-content bg-white">
                 <form class="form-group" id="formPageSearch">
-                    <input name="url" type="hidden" value="AnaularList" />
+                    <input name="url" type="hidden" value="AngularList" />
                     <input name="pagesize" type="hidden" value="10" />
                     <input name="page" type="hidden" value="1" />
                     <input name="sort" type="hidden" value="s_createDate-desc" />
@@ -57,7 +55,7 @@
                     <div class="form-group col-sm-6 text-left">
                         <button type="button" ng-click="Searchs()" class="btn btn-success" data-toggle="tooltip" title="搜索"><i class="icon-search"></i> &nbsp;&nbsp;搜索</button>
                         <a ng-click="Reload()" data-toggle="tooltip" title="刷新" class="btn btn-info"><i class="icon-refresh"></i> &nbsp;&nbsp;刷新</a>
-                        <a href="/Angular/ShowAddStu" data-toggle="tooltip" title="添加" class="btn btn-info"><i class="icon-plus"></i> &nbsp;&nbsp;添加</a>
+                        <a ng-click="OpenAdd()" data-toggle="tooltip" title="添加" class="btn btn-info"><i class="icon-plus"></i> &nbsp;&nbsp;添加</a>
                         <button type="button" onclick="GetInfo()" class="btn btn-primary" data-toggle="tooltip" title="获取选中的学生">获取选中的学生</button>
                         <button type="button" onclick="GetSelect()" class="btn btn-primary" data-toggle="tooltip" title="选择人员">选择人员</button>
                     </div>
@@ -65,7 +63,6 @@
                 </form>
             </div>
         </div>
-
         <div id="pageTable">
             <!---如果table不放在 panel-body 中，面板会和表格连接 没有空隙--->
             <table id="tblList" class="table table-striped table-hover table-bordered bg-white">
@@ -74,6 +71,9 @@
                         <label class="checkbox-inline" style=" font-weight: bold;">
                             <input type="checkbox" onclick="chkAll(this)"> 全选
                         </label>
+                    </th>
+                    <th class="th-title">
+                        @Html.DisplayNameFor(model => model[0].s_id)
                     </th>
                     <th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_name)
@@ -108,16 +108,18 @@
                         @Html.DisplayNameFor(model => model[0].s_createDate)
                     </th>
                     <th class="th-title">
-                        @Html.DisplayNameFor(model => model[0].s_GradeID)
+                        @Html.DisplayNameFor(model => model[0].GradeName)
                     </th>
                     <th class="th-title">操作</th>
                 </tr>
-
                 <tr ng-repeat="stu in list | filter:fun">
                     <td class="th-title">
                         <label class="checkbox-inline">
                             <input name="s_id" value="{{stu.s_id}}" type="checkbox" />
                         </label>
+                    </td>
+                    <td>
+                        {{(pageIndex-1)*pageSize+$index+1}}
                     </td>
                     <td>
                         {{stu.s_name}}
@@ -155,18 +157,29 @@
                     </td>
                     <td>
                         <a ng-click="OpenUpdate($event.target)" data-value="{{stu.s_id}}" uib-tooltip="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
-                        @*<a href="Details/{{stu.s_id}}" data-toggle="tooltip" title="预览" class="btn btn-success btn-xs"><i class="icon-eye-open"></i></a>*@
                         <a ng-show="{{stu.s_status == 1 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="删除" class="btn btn-danger btn-xs"><i class="icon-trash"></i> 删除</a>
                         <a ng-show="{{stu.s_status == 0 ? 'true' : 'false'}}" onclick="ConfirmDelete(this)" data-value="{{stu.s_id}}" uib-tooltip="恢复" class="btn btn-success btn-xs"><i class="icon-trash"></i> 恢复</a>
                     </td>
                 </tr>
-
             </table>
             <div class="form-group">
                 <span>当前第{{pageIndex}}/{{totalPage}}页 共{{total}}条记录 每页{{pageSize}}条</span>
-                <uib-pagination style="margin-top:5px;" id="pagination" class="pagination-sm pull-right" total-items="total" ng-model="pageIndex" ng-change="Searchs('')" boundary-links="true"
-                                force-ellipses="false" first-text="首页" last-text="末页" items-per-page="pageSize" maxSize="5" previous-text="上一页" next-text="下一页"></uib-pagination>
-
+                <uib-pagination style="margin-top:5px;"
+                                id="pagination"
+                                class="pagination-sm pull-right"
+                                total-items="total"
+                                ng-model="pageIndex"
+                                ng-change="Searchs('')"
+                                boundary-links="true" @*是否总是显示第一个和最后一个按钮*@
+                                force-ellipses="true" @*当总页数大于最大显示页数（max-size）显示省略号按钮*@
+                                first-text="首页"
+                                last-text="末页"
+                                rotate="true" @*是否将当前选中页显示在中间*@
+                                items-per-page="pageSize" @*每页显示条数*@
+                                max-size="5" @*限制分页按钮显示的数量大小*@
+                                previous-text="上一页"
+                                next-text="下一页">
+                </uib-pagination>
             </div>
             <div class="form-group">
                 <span>每页显示</span>
@@ -178,7 +191,6 @@
         </div>
     </div>
 </section>
-
 
 @section scripts{
     <script type="text/javascript">
@@ -253,13 +265,12 @@
          */
         function GetSelect() {
             hhl.dialog.open("/Student/TreeIndex?id=" + escape($("#txtId").attr("title")), "选择人员", {
-                area: ["200px", "360px"],
+                area: ["300px", "400px"],
                 btn: ["确定", "关闭"]
             });
         }
 
     </script>
-
 
     <script type="text/javascript">
 
@@ -295,9 +306,9 @@
                 $scope.condition = { page: $scope.pageIndex, pageSize: $scope.pageSize, sortName: sortName, searchs: $scope.searchs };
                 $http.post('/Angular/GetStudentByCondition', $scope.condition)
                     .success(function (data) {
-                        $scope.list = data.data;
+                        $scope.list = data.Rows;
                         $scope.pageIndex = data.PageIndex;
-                        $scope.total = data.total;
+                        $scope.total = data.Total;
                         $scope.totalPage = data.TotalPage;
                     });
 
@@ -337,8 +348,17 @@
                     id = $(obj).parents("td").find("a:first").data("value");
                 }
 
-                hhl.dialog.openUpdate(["/Student/Edit?id=" + id,], "修改学生信息", {
-                    area: ["500px", "550px"],
+                hhl.dialog.openUpdate(["/Angular/EditStudent?id=" + id,], "修改学生信息", {
+                    area: ["520px", "550px"],
+                }, 1);
+
+            }
+
+
+            //添加学生信息
+            $scope.OpenAdd = function (obj) {
+                hhl.dialog.openUpdate(["/Angular/AddStudent",], "添加学生信息", {
+                    area: ["520px", "550px"],
                 }, 1);
 
             }
@@ -362,7 +382,6 @@
 
 
     </script>
-
     <script type="text/javascript">
         //动态背景  雪花
         var snow = function () {

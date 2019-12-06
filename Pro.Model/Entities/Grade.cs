@@ -12,8 +12,8 @@ namespace Pro.Model
     {
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int GradeID { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		public Guid ID { get; set; }
 
 		[StringLength(50)]
 		public string GradeName { get; set; }
@@ -23,8 +23,6 @@ namespace Pro.Model
 		public bool? GradeIsDelete { get; set; }
 
 		public string GradeReamrk { get; set; }
-
-		public Guid? ID { get; set; }
 
     }
 }

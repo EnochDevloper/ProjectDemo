@@ -252,6 +252,23 @@ namespace Pro.Dal.Base
         }
         #endregion
 
+        #region  5.2 根据条件查询
+        /// <summary>
+        /// 5.2 根据条件查询
+        /// </summary>
+        public List<T> GetListBySingle(Expression<Func<T, bool>> parm)
+        {
+            IQueryable<T> query = ObjEntity.Set<T>();
+            if (parm != null)
+            {
+                query = query.Where(parm);
+            }
+            return query.AsNoTracking().ToList();
+        }
+        #endregion
+
+
+
 
 
         #region 6.0分页查询 带输出
@@ -279,7 +296,7 @@ namespace Pro.Dal.Base
             }
 
             // 分页 一定注意： Skip 之前一定要 OrderBy
-            rowCount = query.FutureCount();
+            rowCount = query.Count();
             if (CtrPagerIndex != null)
             {
                 CtrPagerIndex.RecordCount = rowCount;
@@ -321,7 +338,7 @@ namespace Pro.Dal.Base
                 }
             }
 
-            rowCount = query.FutureCount();
+            rowCount = query.Count();
 
             if (CtrPagerIndex != null)
             {
@@ -383,7 +400,7 @@ namespace Pro.Dal.Base
 
                 // 分页 一定注意： Skip 之前一定要 OrderBy
 
-                rowCount = query.FutureCount();
+                rowCount = query.Count();
 
                 if (CtrPagerIndex != null)
                 {

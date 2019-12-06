@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AjaxMessage.cs" />
+    <Compile Include="AjaxPager.cs" />
     <Compile Include="Commons.cs" />
     <Compile Include="CommonEnum.cs" />
     <Compile Include="PagedList.cs" />

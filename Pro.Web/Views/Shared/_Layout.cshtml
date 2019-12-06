@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title-用户测试平台</title>
     <!--bootstrap 样式-->
-    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/css")
 
     @*@Styles.Render("~/Content/style")*@
     <!--jquery 插件-->
@@ -25,7 +25,7 @@
 
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="~/Content/style.css" rel="stylesheet" />
+    @*<link href="~/Content/style.css" rel="stylesheet" />*@
 
 
     <!--awesome 字体文件-->
@@ -39,7 +39,9 @@
     <!--jquery 插件-->
     @Scripts.Render("~/bundles/jquery")
 
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
     <link href="~/Content/proset/toastr/toastr.css" rel="stylesheet" />
     <script src="~/Content/proset/toastr/toastr.js"></script>

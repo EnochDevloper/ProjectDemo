@@ -16,7 +16,7 @@ namespace Pro.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Student", action = "List", id = UrlParameter.Optional }
+                defaults: new { controller = "Angular", action = "AngularList", id = UrlParameter.Optional }
             );
         }
     }

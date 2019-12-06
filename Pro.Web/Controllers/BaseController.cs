@@ -30,14 +30,14 @@ namespace Pro.Web.Controllers
             if (!string.IsNullOrEmpty(name))
             {
                 userList = userList.Where(c => c.s_name.Contains(name)).ToList();
-                deptList = (from c in userList join d in deptList on c.s_GradeID equals d.GradeID select d).ToList();
+                deptList = (from c in userList join d in deptList on c.s_Grade_ID equals d.ID select d).ToList();
             }
 
             foreach (var item in deptList)
             {
                 TreeVO entity = new TreeVO();
-                entity.id = item.GradeID;
-                entity.pid = 0;
+                entity.id = item.ID;
+                entity.pid = Guid.Empty;
                 entity.name = item.GradeName;
                 tree.Add(entity);
             }
@@ -47,7 +47,7 @@ namespace Pro.Web.Controllers
                 TreeVO entity = new TreeVO();
 
                 entity.id = item.s_id;
-                entity.pid = item.s_GradeID;
+                entity.pid = item.s_Grade_ID;
                 entity.name = item.s_name;
                 tree.Add(entity);
 

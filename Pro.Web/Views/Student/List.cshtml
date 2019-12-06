@@ -7,7 +7,6 @@
     List<SelectListItem> itemList = ViewData["selectList"] as List<SelectListItem>;
 }
 
-
 <section class="panel panel-widget">
     @{
         string[] weekDays = { "星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
@@ -19,7 +18,6 @@
     当前时间 <span class="spanTime"></span>
     <div class="panel-body" ng-app="MyApp" ng-controller="MyCtrl" id="MyApp">
         <!--背景颜色条-->
-
         <div class="widget box">
             <div class="widget-header">
                 <h4 class="pull-left"><i class="icon-reorder"></i>搜索条件</h4>
@@ -55,20 +53,17 @@
                 </form>
             </div>
         </div>
-
         <!---如果table不放在 panel-body 中，面板会和表格连接 没有空隙--->
         <div id="pageTable">
             @Html.Partial("_StuList", Model)
         </div>
-
         @*<div id="pageList" class="form-group">
-            <span>每页显示</span>
-            <select id="sel_pageSize" ng-model="pageSize" ng-change="Search()">
-                <option ng-repeat="page in pageSizeList" ng-selected="pageSizeList[3]">{{page.pagesize}}</option>
-            </select>
-            <span>条</span>
-        </div>*@
-
+                <span>每页显示</span>
+                <select id="sel_pageSize" ng-model="pageSize" ng-change="Search()">
+                    <option ng-repeat="page in pageSizeList" ng-selected="pageSizeList[3]">{{page.pagesize}}</option>
+                </select>
+                <span>条</span>
+            </div>*@
         <!--学生详情-->
         <div class="modal fade" id="DetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -88,7 +83,6 @@
     </div>
 </section>
 @section scripts{
-
     <script type="text/javascript">
 
         $(function () {

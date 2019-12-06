@@ -46,6 +46,7 @@
     <Compile Include="DisplayNameExtension.cs" />
     <Compile Include="ExpressionTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectItemExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pro.Common\Pro.Common.csproj">

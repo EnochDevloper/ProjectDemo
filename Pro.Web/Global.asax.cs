@@ -13,7 +13,8 @@ using Pro.Model;
 using System.Web.Compilation;
 using Pro.Dal.Stu;
 using Pro.Dal.Base;
-using Autofac.Core.Activators.Reflection;
+using Autofac.Core;
+using System.Data.Entity;
 
 namespace Pro.Web
 {
@@ -25,6 +26,9 @@ namespace Pro.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //支持“EFDBContext”上下文的模型已在数据库创建后发生更改。请考虑使用 Code First 迁移更新数据库
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFDbContext>());
 
             //启用autofac注入
             //AutoFacInit();
@@ -71,7 +75,7 @@ namespace Pro.Web
             builder.RegisterControllers(controllerAss);
 
 
-           
+
             //第三步：告诉AutoFac容器，创建项目中的指定类的对象实例，以接口的形式存储（其实就是创建数据仓储层与业务逻辑层这两个程序集中所有类的对象实例，然后以其接口的形式保存到AutoFac容器内存中，当然如果有需要也可以创建其他程序集的所有类的对象实例，这个只需要我们指定就可以了）  
 
             //3.1 加载数据仓储层Pro.Repository这个程序集。  

@@ -53,7 +53,7 @@ namespace Pro.Common
         /// 尝试将字符串转换为时间格式 如果字符串非法则返回最小时间
         /// </summary>
         /// <param name="Value"></param>
-        public static DateTime ToDateTime(this string Value)
+        public static DateTime? ToDateTime(this string Value)
         {
             if (string.IsNullOrEmpty(Value))
             {

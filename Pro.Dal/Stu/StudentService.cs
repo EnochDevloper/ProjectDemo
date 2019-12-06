@@ -66,7 +66,7 @@ namespace Pro.Dal.Stu
         public List<StudentDTO> GetConditionStu(int page, int pagesize, string sortName, List<Expression<Func<StudentDTO, bool>>> parmList, ref int count)
         {
             var query = (from c in ObjEntity.Student
-                         join d in ObjEntity.Grade on c.s_GradeID equals d.GradeID
+                         join d in ObjEntity.Grade on c.s_Grade_ID equals d.ID
                          select new StudentDTO()
                          {
                              s_id = c.s_id,
@@ -93,10 +93,16 @@ namespace Pro.Dal.Stu
                 }
             }
             //返回总条数
-            count = query.FutureCount();
-
-            query = SortTools.SortingAndPaging<StudentDTO>(query, sortName, page, pagesize);
-            return query.ToList();
+            count = query.Count();
+            if (count > 0)
+            {
+                query = SortTools.SortingAndPaging<StudentDTO>(query, sortName, page, pagesize);
+                return query.ToList();
+            }
+            else
+            {
+                return new List<StudentDTO> { };
+            }
         }
 
 
@@ -106,9 +112,10 @@ namespace Pro.Dal.Stu
         /// 获取实体类
         /// </summary>
         /// <returns></returns>
-        public Student GetModel(int id)
+        public Student GetModel(string id)
         {
-            return StuBLL.GetFirstOrDefault(c => c.s_id == id);
+            Guid sId = new Guid(id.ToString());
+            return StuBLL.GetFirstOrDefault(c => c.s_id == sId);
         }
 
 
@@ -145,7 +152,7 @@ namespace Pro.Dal.Stu
         {
             int result = 0;
 
-            return 0;
+            return result;
         }
     }
 }

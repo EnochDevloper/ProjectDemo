@@ -76,6 +76,9 @@ namespace Pro.Dal.Base
         List<T> GetListBy<TKey>(List<Expression<Func<T, bool>>> parmList, Expression<Func<T, TKey>> orderLambda, bool isAsc = true);
         #endregion
 
+        #region  5.2 根据条件查询
+        List<T> GetListBySingle(Expression<Func<T, bool>> parm);
+        #endregion
 
 
         #region 6.0 分页查询 带输出

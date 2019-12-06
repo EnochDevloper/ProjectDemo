@@ -14,9 +14,9 @@ namespace Pro.Model.model
   */
     public class TreeVO
     {
-        public int id { get; set; }
+        public Guid? id { get; set; }
 
-        public int? pid { get; set; }
+        public Guid? pid { get; set; }
         public string name { get; set; }
 
     }

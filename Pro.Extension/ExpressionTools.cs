@@ -347,7 +347,9 @@ namespace Pro.Extension
                             Expression left1 = Expression.Call(left, strings);
                             if (value.Contains(","))            //多选
                             {
-                                where2 = Expression.Call(left1, method, right2);
+                                method = typeof(string).GetMethod("Contains");
+                                where2 = Expression.Call(right2, method, left1);
+
                             }
                             else                        //单个查询
                             {
