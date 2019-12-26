@@ -7,6 +7,7 @@ using Pro.Model;
 using Pro.Model.dto;
 using Pro.Model.model;
 using Pro.Repository.Repository;
+using Pro.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,14 @@ namespace Pro.WebApi.Controllers
     /// </summary>
     public class StudentsController : ApiController
     {
+        //private IDataRepository<Student> stuReporitory;
+        ///// <summary>
+        ///// 构造函数
+        ///// </summary>
+        //public StudentsController(IDataRepository<Student> _stuReporitory)
+        //{
+        //    this.stuReporitory = _stuReporitory;
+        //}
 
 
 
@@ -58,6 +67,7 @@ namespace Pro.WebApi.Controllers
         /// </summary>
         /// <param name="ParentID">父公司ID</param>
         /// <returns></returns>
+        [HttpPost]
         public List<TreesNode> DiGuiCompany(Guid? ParentID = null)
         {
             EFDbContext context = new EFDbContext();
@@ -143,5 +153,58 @@ namespace Pro.WebApi.Controllers
 
         }
         #endregion
+
+
+        /// <summary>
+        /// @author:wp
+        /// @datetime:2019-12-13
+        /// @desc:登录功能
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="passWord">密码</param>
+        /// <returns></returns>
+        public AjaxMessage Login(string userName = "", string passWord = "")
+        {
+            AjaxMessage ajax = new AjaxMessage();
+            try
+            {
+                DataRepository<Student> stuReporitory = new DataRepository<Student>();
+                if (string.IsNullOrEmpty(userName))
+                {
+                    userName = "zhangchu";
+                }
+
+                if (string.IsNullOrEmpty(passWord))
+                {
+                    passWord = "123456";
+                }
+
+                var m_student = stuReporitory.GetRepositoy().FirstOrDefault(c => c.s_loginName == userName);
+                if (m_student != null)
+                {
+                    if (m_student.s_passWord == passWord)
+                    {
+                        ajax.Message = "登录成功";
+                        ajax.data = m_student;
+                        ajax.IsSuccess = true;
+                    }
+                    else
+                    {
+                        ajax.Message = "登录失败,密码错误!";
+                        ajax.IsSuccess = false;
+                    }
+                }
+                else
+                {
+                    ajax.Message = "账户不存在,请检查核实!";
+                    ajax.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex.Message, ex);
+            }
+            return ajax;
+        }
     }
 }

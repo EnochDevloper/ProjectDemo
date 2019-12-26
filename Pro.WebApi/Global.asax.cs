@@ -2,10 +2,12 @@
 using Autofac.Integration.Mvc;
 using Pro.Dal.Base;
 using Pro.Repository.Repository;
+using Pro.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -43,7 +45,7 @@ namespace Pro.WebApi
             ContainerBuilder builder = new Autofac.ContainerBuilder();
 
             //第二步：告诉AutoFac控制器工厂，控制器类的创建去哪些程序集中查找（默认控制器工厂是去扫描bin目录下的所有程序集）  
-            //2.1 从当前运行的bin目录下加载Pro.Web.dll程序集  
+            //2.1 从当前运行的bin目录下加载Pro.WebApi.dll程序集  
             Assembly controllerAss = Assembly.Load("Pro.WebApi");
 
             //2.2 告诉AutoFac控制器工厂，控制器的创建从controllerAss中查找（注意：RegisterControllers()方法是一个可变参数，如果你的控制器类的创建需要去多个程序集中查找的话，那么我们就再用Assembly controllerBss=Assembly.Load("需要的程序集名")加载需要的程序集，然后与controllerAss组成数组，然后将这个数组传递到RegisterControllers()方法中）  
@@ -99,5 +101,13 @@ namespace Pro.WebApi
             //具体参考：http://www.cnblogs.com/artech/archive/2012/04/01/controller-activation-032.html  
 
         }
+
+        public void Application_Error(object sender, EventArgs e)
+        {
+            // 在出现未处理的错误时运行的代码
+            Exception ex = Server.GetLastError().GetBaseException();
+            LogHelper.WriteLog(ex.Message, ex);
+        }
+
     }
 }

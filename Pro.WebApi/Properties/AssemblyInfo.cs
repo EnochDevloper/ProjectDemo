@@ -33,3 +33,6 @@ using System.Runtime.InteropServices;
 // 方法是按如下所示使用 "*":
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+//为项目注册Log4Net.config配置文件
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", ConfigFileExtension = "config", Watch = true)]
