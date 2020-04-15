@@ -82,6 +82,7 @@ namespace Pro.Dal.Stu
                              s_status = c.s_status,
                              SexName = c.s_sex == 0 ? "男" : "女",
                              StatusName = c.s_status == 1 ? "启用" : "禁用",
+                             s_Grade_ID=c.s_Grade_ID,
                              GradeName = d.GradeName
                          });
 

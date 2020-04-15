@@ -1136,6 +1136,7 @@
     <Content Include="Scripts\ztree\js\jquery.ztree.exhide.js" />
     <Content Include="Scripts\ztree\js\jquery.ztree.exhide.min.js" />
     <Content Include="Test\Index.html" />
+    <Content Include="Test\Index1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

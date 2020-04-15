@@ -154,7 +154,7 @@ namespace Pro.WebApi.Controllers
         }
         #endregion
 
-
+        #region 登录功能
         /// <summary>
         /// @author:wp
         /// @datetime:2019-12-13
@@ -206,5 +206,82 @@ namespace Pro.WebApi.Controllers
             }
             return ajax;
         }
+        #endregion
+
+        #region  修改学生信息功能
+        /// <summary>
+        /// 编辑页面  修改功能
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public AjaxMessage UpdateStu(Student stu)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+
+            try
+            {
+                ajax.IsSuccess = false;
+                ajax.Message = "系统异常,修改失败";
+                if (stu != null)
+                {
+                    DataRepository<Student> stuReporitory = new DataRepository<Student>();
+                    Student result = stuReporitory.Update(stu);
+                    if (result != null)
+                    {
+                        ajax.IsSuccess = true;
+                        ajax.Message = "修改成功";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex.Message, ex);
+            }
+            return ajax;
+        }
+        #endregion
+
+        #region 重置密码
+        /// <summary>
+        /// @author:wp
+        /// @datetime:2020-04-03
+        /// @desc:重置密码
+        /// </summary>
+        /// <param name="Id">编号</param>
+        /// <returns></returns>
+
+        public AjaxMessage ResetPassWord(Guid sid)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+
+            DataRepository<Student> stuReporitory = new DataRepository<Student>();
+
+            try
+            {
+                ajax.IsSuccess = false;
+                ajax.Message = "系统异常,修改失败";
+                if (!string.IsNullOrEmpty(sid.ToString()) && sid != Guid.Empty)
+                {
+                    var model = stuReporitory.GetFirstOrDefault(c => c.s_id == sid);
+                    if (model != null)
+                    {
+                        model.s_passWord = "123";
+                        var result = stuReporitory.Update(model);
+                        if (result != null)
+                        {
+                            ajax.IsSuccess = true;
+                            ajax.Message = "重置密码成功";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ajax.Message = ex.Message;
+            }
+            return ajax;
+        }
+        #endregion
     }
 }
