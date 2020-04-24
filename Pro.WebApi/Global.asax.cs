@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using Pro.Dal.Base;
+using Pro.Model;
 using Pro.Repository.Repository;
 using Pro.WebApi.Models;
 using System;
@@ -75,6 +77,8 @@ namespace Pro.WebApi
             builder.RegisterGeneric(typeof(BaseService<>)).As(typeof(IBaseService<>))
               .InstancePerDependency();
 
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
             //第四步：创建一个真正的AutoFac的工作容器  
             var container = builder.Build();
 
@@ -82,11 +86,14 @@ namespace Pro.WebApi
             //我们已经创建了指定程序集的所有类的对象实例，并以其接口的形式保存在AutoFac容器内存中了。那么我们怎么去拿它呢？  
             //从AutoFac容器内部根据指定的接口获取其实现类的对象实例  
             //假设我要拿到IsysFunctionServices这个接口的实现类的对象实例，怎么拿呢？  
-            //var obj = container.Resolve<IsysFunctionServices>(); //只有有特殊需求的时候可以通过这样的形式来拿。一般情况下没有必要这样来拿，因为AutoFac会自动工作（即：会自动去类的带参数的构造函数中找与容器中key一致的参数类型，并将对象注入到类中，其实就是将对象赋值给构造函数的参数）  
+            //var obj = container.Resolve<IDataRepository<Student>>(); //只有有特殊需求的时候可以通过这样的形式来拿。一般情况下没有必要这样来拿，因为AutoFac会自动工作（即：会自动去类的带参数的构造函数中找与容器中key一致的参数类型，并将对象注入到类中，其实就是将对象赋值给构造函数的参数）  
 
 
             //第五步：将当前容器中的控制器工厂替换掉MVC默认的控制器工厂。（即：不要MVC默认的控制器工厂了，用AutoFac容器中的控制器工厂替代）此处使用的是将AutoFac工作容器交给MVC底层 (需要using System.Web.Mvc;)  
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
 
             //我们知道控制器的创建是调用MVC默认的控制器工厂，默认的控制器工厂是调用控制器类的无参构造函数  
             //可是我们如果要使用AutoFac自动工厂，将对象通过构造函数注入类中，那么这个构造函数就需要带参数  

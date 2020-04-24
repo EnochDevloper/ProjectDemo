@@ -23,14 +23,14 @@ namespace Pro.WebApi.Controllers
     /// </summary>
     public class StudentsController : ApiController
     {
-        //private IDataRepository<Student> stuReporitory;
-        ///// <summary>
-        ///// 构造函数
-        ///// </summary>
-        //public StudentsController(IDataRepository<Student> _stuReporitory)
-        //{
-        //    this.stuReporitory = _stuReporitory;
-        //}
+        private IDataRepository<Student> stuReporitory;
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public StudentsController(IDataRepository<Student> _stuReporitory)
+        {
+            this.stuReporitory = _stuReporitory;
+        }
 
 
 
@@ -225,7 +225,6 @@ namespace Pro.WebApi.Controllers
                 ajax.Message = "系统异常,修改失败";
                 if (stu != null)
                 {
-                    DataRepository<Student> stuReporitory = new DataRepository<Student>();
                     Student result = stuReporitory.Update(stu);
                     if (result != null)
                     {
@@ -248,14 +247,12 @@ namespace Pro.WebApi.Controllers
         /// @datetime:2020-04-03
         /// @desc:重置密码
         /// </summary>
-        /// <param name="Id">编号</param>
+        /// <param name="sid">编号</param>
         /// <returns></returns>
 
         public AjaxMessage ResetPassWord(Guid sid)
         {
             AjaxMessage ajax = new AjaxMessage();
-
-            DataRepository<Student> stuReporitory = new DataRepository<Student>();
 
             try
             {
