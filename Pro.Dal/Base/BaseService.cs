@@ -252,6 +252,23 @@ namespace Pro.Dal.Base
         }
         #endregion
 
+        #region  5.2 根据条件查询
+        /// <summary>
+        /// 5.2 根据条件查询
+        /// </summary>
+        public List<T> GetListBySingle(Expression<Func<T, bool>> parm)
+        {
+            IQueryable<T> query = ObjEntity.Set<T>();
+            if (parm != null)
+            {
+                query = query.Where(parm);
+            }
+            return query.AsNoTracking().ToList();
+        }
+        #endregion
+
+
+
 
 
         #region 6.0分页查询 带输出

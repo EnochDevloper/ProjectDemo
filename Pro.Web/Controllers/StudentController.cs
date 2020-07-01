@@ -19,7 +19,10 @@ using Pro.Model.dto;
 
 namespace Pro.Web.Controllers
 {
-    public class StudentController : BaseController
+    /// <summary>
+    /// 关于学生表的操作方法 接口
+    /// </summary>
+    public class StudentController :  Controller
     {
         #region 构造函数
         /// <summary>
@@ -31,6 +34,9 @@ namespace Pro.Web.Controllers
         private IBaseService<Student> baseService;
         private IDataRepository<Student> stuReporitory;
         private IBaseService<Company> comService;
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public StudentController(IStudentService _stuService, IConstellationService _consService, IBaseService<Student> _baseService, IDataRepository<Student> _stuReporitory, IBaseService<Company> _comService)
         {
             this.stuService = _stuService;
@@ -234,7 +240,7 @@ namespace Pro.Web.Controllers
             string res = "";
             if (!string.IsNullOrEmpty(id))
             {
-                Student student = stuService.GetModel(id.ToInt32());
+                Student student = stuService.GetModel(id);
                 if (student != null)
                 {
                     res += (@"<div class='form-group'><table class='table table-bordered table-striped table-hover'><tr><td>姓名:</td><td>" + student.s_name + @"</td></tr>
@@ -354,6 +360,70 @@ namespace Pro.Web.Controllers
             return Json(tree);
         }
         #endregion
+
+        #region 获取vue树形数据结构
+        /// <summary>
+        /// @author:wp
+        /// @datetime:2019-12-04
+        /// @desc:vue树形数据结构  (label children)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult GetVueTree(string pid)
+        {
+            var json = Json(new { });
+            AjaxMessage ajax = new AjaxMessage();
+            try
+            {
+                var treeList = DiGuiCompany();
+                ajax.data = treeList;
+                ajax.IsSuccess = true;
+                ajax.Message = "数据获取成功";
+
+                json = Json(new { ajax }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                ajax.IsSuccess = false;
+                ajax.Message = ex.Message;
+
+                json = Json(new { ajax }, JsonRequestBehavior.AllowGet);
+            }
+            return json;
+        }
+        #endregion
+
+        /// <summary>
+        /// 递归获取公司
+        /// </summary>
+        /// <param name="ParentID"></param>
+        /// <returns></returns>
+        public List<TreesNode> DiGuiCompany(Guid? ParentID = null)
+        {
+            if (ParentID == null)
+            {
+                ParentID = Guid.Empty;
+            }
+            List<TreesNode> TreeList = new List<TreesNode>();
+
+            Expression<Func<Company, bool>> parm = c => c.PId == ParentID;
+
+            var parentList = comService.GetListBySingle(c => c.PId == ParentID);
+
+            if (parentList.Count > 0)
+            {
+                foreach (var item in parentList)
+                {
+                    TreesNode node = new TreesNode();
+                    node.Id = item.CompanyID;
+                    node.Label = item.CompanyName;
+                    node.Children = DiGuiCompany(item.CompanyID);
+                }
+            }
+
+
+            return TreeList;
+        }
 
 
 

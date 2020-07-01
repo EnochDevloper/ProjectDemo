@@ -50,6 +50,9 @@ namespace Pro.Model.dto
         public DateTime? s_createDate { get; set; }
 
         [Display(Name = "年级")]
+        public Guid? s_Grade_ID { get; set; }
+
+        [Display(Name = "年级")]
         public string GradeName { get; set; }
     }
 }

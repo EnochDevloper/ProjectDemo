@@ -178,18 +178,18 @@ var hhl = hhl || {};
         hhl.dialog.open = function (url, title, options) {
             options = options || {};
             var opts =
-                {
-                    type: 2,
-                    title: title,
-                    shade: 0.4,
-                    maxmin: true,
-                    area: ["80%", "80%"],
-                    content: url,
-                    skin: 'layui-layer-moon',
-                    yes: function (index, layero) {
-                        hhl.dialogYes(layero);
-                    }
-                };
+            {
+                type: 2,
+                title: title,
+                shade: 0.4,
+                maxmin: true,
+                area: ["80%", "80%"],
+                content: url,
+                skin: 'layui-layer-moon',
+                yes: function (index, layero) {
+                    hhl.dialogYes(layero);
+                }
+            };
             var args = $.extend({}, opts, options);
             dialog.open(args);
         };
@@ -203,33 +203,33 @@ var hhl = hhl || {};
 
             options = options || {};
             var opts =
-                {
-                    type: 2,
-                    content: url,
-                    title: title,
-                    area: ["100%", "100%"],
-                    btn: ["确定", "取消"],
-                    maxmin: true,
-                    yes: function (index, layero) {
-                        hhl.dialogYes(layero);
-                        isSuccess = true;
-                    }, btn2: function (index, layero) {
-                        isSuccess = false;
-                    }, cancel: function () {
-                        isSuccess = false;
-                    },
-                    end: function () {
-                        if (isSuccess) {
-                            $("#btnConfirm").click();
-                            hhl.notify.clear();
-                            if (getType == 1) {
-                                hhl.notify.success("修改成功", "提示");
-                            } else {
-                                hhl.notify.success("添加成功", "提示");
-                            }
+            {
+                type: 2,
+                content: url,
+                title: title,
+                area: ["100%", "100%"],
+                btn: ["确定", "取消"],
+                maxmin: true,
+                yes: function (index, layero) {
+                    hhl.dialogYes(layero);
+                    isSuccess = true;
+                }, btn2: function (index, layero) {
+                    isSuccess = false;
+                }, cancel: function () {
+                    isSuccess = false;
+                },
+                end: function () {
+                    if (isSuccess) {
+                        $("#btnConfirm").click();
+                        hhl.notify.clear();
+                        if (getType == 1) {
+                            hhl.notify.success("修改成功", "提示");
+                        } else {
+                            hhl.notify.success("添加成功", "提示");
                         }
                     }
-                };
+                }
+            };
             var args = $.extend({}, opts, options);
             var index = dialog.open(args);
 
@@ -241,33 +241,33 @@ var hhl = hhl || {};
             var isSuccess = false;
             options = options || {};
             var opts =
-                {
-                    type: 2,
-                    btn: ["确定", "取消"],
-                    title: title,
-                    shade: 0.4,
-                    maxmin: true,
-                    area: ["80%", "80%"],
-                    content: url,
-                    yes: function (index, layero) {
-                        hhl.dialogYes(layero);
-                        isSuccess = true;
-                    }, btn2: function (index, layero) {
-                        isSuccess = false;
-                    }, cancel: function () {
-                        isSuccess = false;
-                    },
-                    end: function () {
-                        if (isSuccess) {
-                            if (type == 1) {
-                                var scope = angular.element($("#MyApp")).scope();
-                                scope.PageLoad();
-                            } else {
-                                hhl.ajaxPartial();
-                            }
+            {
+                type: 2,
+                btn: ["确定", "取消"],
+                title: title,
+                shade: 0.4,
+                maxmin: true,
+                area: ["80%", "80%"],
+                content: url,
+                yes: function (index, layero) {
+                    hhl.dialogYes(layero);
+                    isSuccess = true;
+                }, btn2: function (index, layero) {
+                    isSuccess = false;
+                }, cancel: function () {
+                    isSuccess = false;
+                },
+                end: function () {
+                    if (isSuccess) {
+                        if (type == 1) {
+                            var scope = angular.element($("#MyApp")).scope();
+                            scope.PageLoad();
+                        } else {
+                            hhl.ajaxPartial();
                         }
                     }
-                };
+                }
+            };
             var args = $.extend({}, opts, options);
             dialog.open(args);
         };
@@ -531,7 +531,7 @@ var hhl = hhl || {};
     页面加载重新排序
     */
     function SortPage(sort, obj) {
-        
+
         if (!sort) {
             sort = $("input[name='sort']").val();
         }

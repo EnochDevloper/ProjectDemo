@@ -1,20 +1,18 @@
 ﻿@using Pro.Extension
 @using Pro.Common
 @model Pro.Model.Student
-
 @{
     ViewBag.Title = "修改 EditStudent";
     Layout = "~/Views/Shared/_LayoutNull.cshtml";
 }
-
 @using (Html.BeginForm())
 {
     <section class="panel panel-widget">
-
         <div class="panel-body bg-white">
             <div class="form-horizontal tasi-form">
                 <div class="col-md-12">
                     <div class="widget-content">
+                        @Html.HiddenFor(model => model.s_id)
                         <div class="form-group">
                             @Html.LabelFor(model => model.s_name, new { @class = "control-label col-sm-2" })
                             <div class="col-sm-6">
@@ -81,7 +79,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.s_createDate, new { @class = "control-label col-sm-2" })
                             <div class="col-sm-9">
-                                @Html.TextBoxFor(model => model.s_createDate, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control",placeholder = "请输入" + Html.DisplayNameFor(model => model.s_createDate) })
+                                @Html.TextBoxFor(model => model.s_createDate, "{0:yyyy-MM-dd HH:mm:ss}", new { @class = "form-control", placeholder = "请输入" + Html.DisplayNameFor(model => model.s_createDate) })
                                 @Html.ValidationMessageFor(model => model.s_createDate)
                             </div>
                         </div>
@@ -96,9 +94,14 @@
                 </div>
             </div>
         </div>
-
     </section>
 }
 @section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
 
+    <script type="text/javascript">
+        function submitForm() {
+            hhl.ajax("/Angular/UpdateStu");
+        }
+    </script>
 }

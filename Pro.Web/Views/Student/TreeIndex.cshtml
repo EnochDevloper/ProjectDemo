@@ -93,9 +93,6 @@
                 }
             };
 
-
-
-            debugger
             var treeNodes = JSON.parse('@Html.Raw(ViewData["data"])');
             var zTree = $.fn.zTree.init($("#user_tree"), setting, treeNodes);
 
@@ -147,7 +144,6 @@
 
             $.post("/User/GetTreeData", { name: name }, function (result) {
                 if (result) {
-                    debugger
                     var TreeNodes = JSON.parse(result);
                     onLoadZTree(TreeNodes);
                 }

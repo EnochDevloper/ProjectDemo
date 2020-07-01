@@ -57,6 +57,7 @@
     <Compile Include="Entities\Student.cs" />
     <Compile Include="model\Grade_partial.cs" />
     <Compile Include="model\Student_partial.cs" />
+    <Compile Include="model\TreesNode.cs" />
     <Compile Include="model\TreeVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

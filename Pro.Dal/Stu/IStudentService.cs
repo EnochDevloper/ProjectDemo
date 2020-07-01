@@ -24,7 +24,7 @@ namespace Pro.Dal.Stu
         /// </summary>
         List<StudentDTO> GetConditionStu(int page, int pagesize, string sortName, List<Expression<Func<StudentDTO, bool>>> parmList, ref int count);
 
-        Student GetModel(int id);
+        Student GetModel(string id);
 
         Student ModifyStudent(Student stu);
 

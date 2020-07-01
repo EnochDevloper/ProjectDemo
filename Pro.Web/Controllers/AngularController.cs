@@ -57,7 +57,7 @@ namespace Pro.Web.Controllers
         #endregion
 
         #region 分页 异步查询
-        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public JsonResult GetStudentByCondition(int page, int pageSize, string sortName, List<PropModel> searchs)
         {
             AjaxMessage ajax = new AjaxMessage();
@@ -100,12 +100,12 @@ namespace Pro.Web.Controllers
             //return ajax;
             return Json(new
             {
-                data = ajax.data,
-                total = ajax.total,        //数据总条数
+                Rows = ajax.data,
+                Total = ajax.total,        //数据总条数
                 PageIndex = page,      //当前页
                 PageSize = pageSize,   //每页显示条数
                 TotalPage = ajax.TotalPage
-            });
+            }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -116,17 +116,17 @@ namespace Pro.Web.Controllers
         /// <returns></returns>
         public ActionResult ShowAddStu()
         {
-            TempData["login"] = "zhangchu";
+            //TempData["login"] = "zhangchu";
 
             return RedirectToAction("AddStudent", new { name = "张楚" });
         }
 
         public ActionResult AddStudent(string txtName)
         {
-            string tname = txtName;
-            string sname = Request["name"].ToString();
-            Student model = stuReporitory.GetAllList().FirstOrDefault(c => c.s_name == sname);
-            return View(model);
+            //string tname = txtName;
+            //string sname = Request["name"].ToString();
+            //Student model = stuReporitory.GetAllList().FirstOrDefault(c => c.s_name == sname);
+            return View();
         }
         #endregion
 
@@ -244,6 +244,31 @@ namespace Pro.Web.Controllers
                             ajax.Message = "启用成功";
                         }
                     }
+                }
+            }
+            return Json(ajax);
+        }
+        #endregion
+
+        #region 编辑页面  修改功能
+        /// <summary>
+        /// 编辑页面  修改功能
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult UpdateStu(Student stu)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+            ajax.IsSuccess = false;
+            ajax.Message = "系统异常";
+            if (stu != null)
+            {
+                Student result = stuReporitory.Update(stu);
+                if (result != null)
+                {
+                    ajax.IsSuccess = true;
+                    ajax.Message = "修改成功";
                 }
             }
             return Json(ajax);

@@ -76,20 +76,20 @@
                 @Html.DisplayFor(modelItem => item.s_remark)
             </td>
             <td>
-                @item.s_createDate.ToString().ToDateTime().ToString("yyyy-MM-dd")
+                @item.s_createDate.ToString().ToDateTime()
             </td>
             @*<td>
                 @item.GradeValue.GetDisplayName()
             </td>*@
             <td>
-                <a onclick="UpdateSingleStatus(@item.s_id,@(item.s_status == 0 ? 1 : 0))" class='btn btn-@(item.s_status == 0 ? "danger" : "success") btn-xs' title='@(item.s_status == 0 ? "禁用" : "启用")' @(item.s_status == 0 ? "id='btnSingleEnable'" : "id=btnSingleDisable") data-toggle="tooltip">
+                <a onclick="UpdateSingleStatus('@item.s_id',@(item.s_status == 0 ? 1 : 0))" class='btn btn-@(item.s_status == 0 ? "danger" : "success") btn-xs' title='@(item.s_status == 0 ? "禁用" : "启用")' @(item.s_status == 0 ? "id='btnSingleEnable'" : "id=btnSingleDisable") data-toggle="tooltip">
                     <i class='@(item.s_status == 0 ? "icon-off" : "icon-ok")'></i>
                 </a>
             </td>
             <td>
-                <a onclick="OpenUpdate(@item.s_id)" data-toggle="tooltip" title="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
-                <a href="#DetailsModal" onclick="Details(@item.s_id)" data-toggle="modal" title="编辑" class="btn btn-success btn-xs"><i class="icon-eye-open"></i></a>
-                <a onclick="ConfrimDelete(@item.s_id)" data-toggle="tooltip" class="btn btn-danger btn-xs" title="删除"><i class="icon-remove"></i>  删除</a>
+                <a onclick="OpenUpdate('@item.s_id')" data-toggle="tooltip" title="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
+                <a href="#DetailsModal" onclick="Details('@item.s_id')" data-toggle="modal" title="编辑" class="btn btn-success btn-xs"><i class="icon-eye-open"></i></a>
+                <a onclick="ConfrimDelete('@item.s_id')" data-toggle="tooltip" class="btn btn-danger btn-xs" title="删除"><i class="icon-remove"></i>  删除</a>
             </td>
         </tr>}
 </table>
