@@ -258,3 +258,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Pro.Web/bin
+/Pro.Repository/bin
+/Pro.Model/bin
+/Pro.Interface/bin
+/Pro.Extension/bin
+/Pro.Dal/bin
+/Pro.Common/bin
