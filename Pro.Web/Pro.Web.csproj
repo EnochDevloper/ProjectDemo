@@ -1088,6 +1088,7 @@
     <Content Include="Scripts\js\angular-animate.js" />
     <Content Include="Scripts\js\angular.js" />
     <Content Include="Scripts\js\angular.min.js" />
+    <Content Include="Scripts\js\ArrayUtil.js" />
     <Content Include="Scripts\js\bootstrap.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
     <Content Include="Scripts\js\Common.js" />
