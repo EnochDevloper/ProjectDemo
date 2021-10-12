@@ -80,9 +80,9 @@
                     <th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_createDate)
                     </th>
-                    <th class="th-title">
+                    @*<th class="th-title">
                         @Html.DisplayNameFor(model => model[0].s_GradeID)
-                    </th>
+                    </th>*@
                     <th class="th-title">操作</th>
                 </tr>
                 @foreach (var item in Model)
@@ -123,9 +123,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.s_createDate)
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.s_GradeID)
-                        </td>
+                        </td>*@
                         <td>
                             <a href="Edit/@item.s_id?key=@Request.QueryString["key"]" data-toggle="tooltip" title="编辑" class="btn btn-info btn-xs"><i class="icon-edit"></i>  编辑</a>
                             <a href="Details/@item.s_id?key=@Request.QueryString["key"]" data-toggle="tooltip" title="预览" class="btn btn-success btn-xs"><i class="icon-eye-open"></i>  预览</a>

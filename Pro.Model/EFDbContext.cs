@@ -19,8 +19,6 @@ namespace Pro.Model
 
         public IDbSet<Student> Student { get; set; }
 
-        public IDbSet<PM_ProjectInfo> PM_ProjectInfo { get; set; }
-
         //public System.Data.Entity.DbSet<Pro.Model.Student> Students { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace Pro.Model
     {
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int cid { get; set; }
 
 		[StringLength(50)]

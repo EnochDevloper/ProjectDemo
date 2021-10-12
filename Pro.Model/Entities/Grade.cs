@@ -12,7 +12,6 @@ namespace Pro.Model
     {
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public Guid ID { get; set; }
 
 		[StringLength(50)]

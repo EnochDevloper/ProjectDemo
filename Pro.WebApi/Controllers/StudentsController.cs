@@ -1,4 +1,5 @@
-﻿using Pro.Common;
+﻿using Newtonsoft.Json;
+using Pro.Common;
 using Pro.Dal.Base;
 using Pro.Dal.Constellatory;
 using Pro.Dal.Stu;
@@ -107,21 +108,31 @@ namespace Pro.WebApi.Controllers
         /// <param name="searchs">查询条件</param>
         /// <returns></returns>
         [AcceptVerbs("GET", "POST")]
-        public AjaxPager GetStudentByCondition(int page, int pageSize, string sortName, List<PropModel> searchs)
+        public AjaxPager GetStudentByCondition(int page, int pageSize, string sortName, string searchs)
         {
             AjaxPager ajax = new AjaxPager();
             ajax.IsSuccess = false;
             ajax.Message = "查询失败,系统异常";
             try
             {
+                var searchData = !string.IsNullOrEmpty(searchs) ? JsonConvert.DeserializeObject<List<PropModel>>(searchs) : new List<PropModel>();
                 int count = 0;
                 //lamada表达式 条件数组
                 List<Expression<Func<StudentDTO, bool>>> parmList = new List<Expression<Func<StudentDTO, bool>>>();
 
+                //if (!string.IsNullOrEmpty(s_name))
+                //{
+                //    parmList.Add(c => c.s_name.Contains(s_name));
+                //}
 
-                if (searchs != null && searchs.Count() > 0)
+                //if (!string.IsNullOrEmpty(s_address))
+                //{
+                //    parmList.Add(c => c.s_address.Contains(s_address));
+                //}
+
+                if (searchData != null && searchData.Count() > 0)
                 {
-                    foreach (PropModel item in searchs)
+                    foreach (PropModel item in searchData)
                     {
                         if (!string.IsNullOrEmpty(item.value) && item.value != ",")
                         {
