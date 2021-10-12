@@ -17,24 +17,32 @@ namespace Pro.Model
 		[StringLength(50)]
 		public string s_name { get; set; }
 
-		[StringLength(50)]
+        [Display(Name = "登录名")]
+        [StringLength(50)]
 		public string s_loginName { get; set; }
 
-		[StringLength(50)]
+        [Display(Name = "密码")]
+        [StringLength(50)]
 		public string s_passWord { get; set; }
 
-		[StringLength(200)]
+        [Display(Name = "地址")]
+        [StringLength(200)]
 		public string s_address { get; set; }
 
-		public byte? s_sex { get; set; }
+        [Display(Name = "性别")]
+        public byte? s_sex { get; set; }
 
-		public int? s_age { get; set; }
+        [Display(Name = "年龄")]
+        public int? s_age { get; set; }
 
-		[StringLength(20)]
+        [Display(Name = "联系电话")]
+        [StringLength(20)]
 		public string s_phone { get; set; }
 
-		public byte? s_status { get; set; }
+        [Display(Name = "状态")]
+        public byte? s_status { get; set; }
 
+        [Display(Name ="备注")]
 		public string s_remark { get; set; }
 
 		public DateTime? s_createDate { get; set; }

@@ -86,7 +86,7 @@ namespace Pro.Dal.Stu
                              GradeName = d.GradeName
                          });
 
-            if (parmList != null)
+            if (parmList != null || parmList.Count!=0)
             {
                 foreach (var parm in parmList)
                 {
